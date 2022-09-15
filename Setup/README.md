@@ -42,12 +42,6 @@ sudo apt install -y git
   
 git clone https://github.com/dgerb/PicrogridEducational.git
 
-When prompted, enter these credentials:
-  
-Username: dgerb
-  
-Password/Token: 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
-
 ## Run setup script
 
 Run the single pi basic setup script with the command:
