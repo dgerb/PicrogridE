@@ -2,6 +2,7 @@
 Provision Instructions:
 
 1. Flash Pi with BerryLan
+
 Download BerryLan enabled Raspbian image from URL:
 https://berrylan.org/
 
