@@ -1,7 +1,6 @@
 # Setup Instructions
-Provision Instructions:
 
-1. Flash Pi with BerryLan
+## Flash Pi with BerryLan
 
 Download BerryLan enabled Raspbian image from URL:
 https://berrylan.org/
@@ -11,7 +10,7 @@ https://www.raspberrypi.com/software/
 
 Put micro SD card in Pi and power it up.
 
-2. Connect Pi to WiFi network
+## Connect Pi to WiFi network
 
 Get the BerryLan app for your phone.
 
@@ -19,8 +18,7 @@ Follow the directions on the app to connect the Pi to WiFi.
 
 Record the IP Address the app displays when done.
 
-
-3. SSH into your Pi
+## SSH into your Pi
 
 Using the IP Address you recorded, SSH into your Pi using the terminal command:
 
@@ -28,7 +26,7 @@ ssh pi@[IP Address]
 
 The default password is "raspberry".
 
-4. Use these commands to download the code base:
+## Use these commands to download the code base:
 
 cd ~
   
@@ -38,7 +36,7 @@ sudo apt upgrade -y
   
 sudo apt install -y git
   
-git clone https://github.com/dgerb/RayOnPi.git
+git clone https://github.com/dgerb/PicrogridEducational.git
 
 When prompted, enter these credentials:
   
@@ -46,7 +44,7 @@ Username: dgerb
   
 Password/Token: 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
 
-5. Run provisioning scripts
+## Run provisioning scripts
 
 Run the basic provisioning script. Use this command:
   
