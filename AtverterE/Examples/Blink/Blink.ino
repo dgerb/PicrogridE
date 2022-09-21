@@ -20,12 +20,12 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  ledTest(LED1R);
-  ledTest(LED1G);
-  ledTest(LED2R);
-  ledTest(LED2G);
-  ledTest2(LED1R, LED1G);
-  ledTest2(LED2R, LED2G);
+  ledTest(LED1R_PIN);
+  ledTest(LED1G_PIN);
+  ledTest(LED2R_PIN);
+  ledTest(LED2G_PIN);
+  ledTest2(LED1R_PIN, LED1G_PIN);
+  ledTest2(LED2R_PIN, LED2G_PIN);
 }
 
 void ledTest(int led) {
