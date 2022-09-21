@@ -40,17 +40,17 @@ sudo apt upgrade -y
   
 sudo apt install -y git
   
-git clone https://github.com/dgerb/PicrogridEducational.git
+git clone https://github.com/dgerb/Picrogrid.git
 
 ## Run setup script
 
 Run the single pi basic setup script with the command:
   
-~/PicrogridEducational/Setup/SinglePiSetup.sh
+~/Picrogrid/Setup/SinglePiSetup.sh
 
 To flash the bootloader, use the command:
   
-~/PicrogridEducational/Setup/AtverterSetup.sh
+~/Picrogrid/Setup/AtverterSetup.sh
 
 You can now program the Atverter with the USB TTL FTDI cable. This Pi can be used initialize future Atverters. To do so, you just need to run the AtverterSetup script.
 
