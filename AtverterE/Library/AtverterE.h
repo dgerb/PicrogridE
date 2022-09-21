@@ -16,8 +16,6 @@
 // In Arduino IDE, go to Sketch -> Include Library -> Manage Libraries
 #include <TimerOne.h> // In Library Manager, search for "TimerOne"
 #include <MsTimer2.h> // In Library Manager, search for "MsTimer2"
-#include <SystemStatus.h> // In Library Manager, search for "MsTimer2"
-
 
 // pins for turning on the LEDs
 const int LED1R_PIN = 2; // Physical pin 4
@@ -46,35 +44,36 @@ const int AVGWIN = 10;
 class AtverterE
 {
   public:
-    AtverterE();
-    void setupPinMode();
-    void initializePWMTimer();
-    void initializeInterruptTimer(int periodms, void (*interruptFunction)(void));
-    void startPWM();
-    void setDutyCycle(int dutyCycle);
-    void setDutyCycleFloat(float dutyCycleFloat);
-    int getDutyCycle();
-    float getDutyCycleFloat();
-    void setLED(int led, int state);
-    int raw2mV(int raw);
-    unsigned int raw2mVActual(int raw);
-    int raw2mA(int raw);
-    int getRawVH();
-    int getVH();
-    unsigned int getActualVH();
-    int getRawIH();
-    int getIH();
-    int getRawVL();
-    int getVL();
-    unsigned int getActualVL();
-    int getRawIL();
-    int getIL();
+    AtverterE(); // constructor
+  // Atmega initialization
+    void setupPinMode(); // sets appropriate pinMode() for each const pin
+    void initializePWMTimer(); // starts the PWM timer at 62.5 kHz
+    void initializeInterruptTimer(int periodms, // starts periodic control timer
+      void (*interruptFunction)(void)); // inputs: period (ms), controller function reference
+    void startPWM(); // resets protection latch, enabling the gate driver
+  // duty cycle
+    void setDutyCycle(int dutyCycle); // sets duty cycle (0 to 1023)
+    void setDutyCycleFloat(float dutyCycleFloat); // sets duty cycle (0.0 to 1.0)
+    int getDutyCycle(); // gets the current duty cycle (0 to 1023)
+    float getDutyCycleFloat(); // gets the current duty cycle (0.0 to 1.0)
+  // voltages and current sensing
+    int getRawVH(); // gets high side voltage (0 to 1023)
+    int getVH(); // gets high side voltage (mV) measured at ADC
+    unsigned int getActualVH(); // gets high side voltage (mV) at terminal
+    int getRawIH(); // gets high side current (0 to 1023)
+    int getIH(); // gets high side current (mA) (-5000 to 5000)
+    int getRawVL(); // gets low side voltage (0 to 1023)
+    int getVL(); // gets low side voltage (mV) measured at ADC
+    unsigned int getActualVL(); // gets low side voltage (mV) at terminal
+    int getRawIL(); // gets low side current (0 to 1023)
+    int getIL(); // gets low side current (mA) (-5000 to 5000)
+  // diagnostics
+    void setLED(int led, int state); // sets an LED to HIGH or LOW
   private:
-    int _dutyCycle = 512; // Timer1 library uses 10-bit (1024 value) PWM
-    int _vHaverage = 0; // high side voltage mV
-    int _iHaverage = 0; // high side current mA
-    int _vLaverage = 0; // low side voltage mV
-    int _iLaverage = 0; // low side current mA
+    int _dutyCycle = 512; // the most recently set duty cycle (0 to 1023)
+    int raw2mV(int raw); // converts raw ADC voltage to mV
+    unsigned int raw2mVActual(int raw); // also scales raw2mV by resistor divider
+    int raw2mA(int raw); // converts raw ADC current sense output to mA
 };
 
 

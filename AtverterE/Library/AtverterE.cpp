@@ -33,11 +33,13 @@ void AtverterE::initializePWMTimer() {
   Timer1.initialize(16);
 }
 
+// initializes timer 2 as the periodic control timer
+// inputs: control period in milliseconds, controller interrupt function reference
+// example usage: atverterE.initializeInterruptTimer(1, &controlUpdate);
 void AtverterE::initializeInterruptTimer(int periodms, void (*interruptFunction)(void)) {
   // MsTimer2::set(period in milliseconds, interrupt function to call)
   MsTimer2::set(periodms, interruptFunction);
-  // start timer 2 and interrupt handler
-  MsTimer2::start();
+  MsTimer2::start(); // start timer 2 and interrupt handler
 }
 
 // intializes timer 1 as PWM timer and timer 2 as control interrupt timer
@@ -73,33 +75,6 @@ float AtverterE::getDutyCycleFloat() {
 void AtverterE::setLED(int led, int state) {
   digitalWrite(led, state);
 }
-
-/*
-// returns the VCC voltage in miliVolts
-long AtverterE::readVCC() {
-  // Read 1.1V reference against AVcc
-  // set the reference to Vcc and the measurement to the internal 1.1V reference
-  #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    ADMUX = _BV(REFS0) | _BV(MUX4) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
-  #elif defined (__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
-     ADMUX = _BV(MUX5) | _BV(MUX0) ;
-  #else
-    ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
-  #endif  
- 
-  delayMicroseconds(100); // Wait for Vref to settle (originally 2 ms delay)
-  ADCSRA |= _BV(ADSC); // Start conversion
-  while (bit_is_set(ADCSRA,ADSC)); // measuring
- 
-  uint8_t low  = ADCL; // must read ADCL first - it then locks ADCH  
-  uint8_t high = ADCH; // unlocks both
- 
-  long result = (high<<8) | low;
- 
-  result = 1125300L / result; // Calculate Vcc (in mV); 1125300 = 1.1*1023*1000
-  return result; // Vcc in millivolts
-}
-*/
 
 // converts a raw 10-bit analog reading (0-1023) to a mV reading (0-5000)
 // assumes VCC = 5V; if not the case, will have to readVCC
@@ -145,7 +120,7 @@ int AtverterE::getRawIH() {
 
 // get the high side current (mA) (-5000 to 5000)
 int AtverterE::getIH() {
-  return raw2mV(getRawIH());
+  return raw2mA(getRawIH());
 }
 
 // get the raw low side voltage (0-1023)
@@ -170,8 +145,35 @@ int AtverterE::getRawIL() {
 
 // get the low side current (mA) (-5000 to 5000)
 int AtverterE::getIL() {
-  return raw2mV(getRawIL());
+  return raw2mA(getRawIL());
 }
+
+/*
+// returns the VCC voltage in miliVolts
+long AtverterE::readVCC() {
+  // Read 1.1V reference against AVcc
+  // set the reference to Vcc and the measurement to the internal 1.1V reference
+  #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    ADMUX = _BV(REFS0) | _BV(MUX4) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  #elif defined (__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+     ADMUX = _BV(MUX5) | _BV(MUX0) ;
+  #else
+    ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
+  #endif  
+ 
+  delayMicroseconds(100); // Wait for Vref to settle (originally 2 ms delay)
+  ADCSRA |= _BV(ADSC); // Start conversion
+  while (bit_is_set(ADCSRA,ADSC)); // measuring
+ 
+  uint8_t low  = ADCL; // must read ADCL first - it then locks ADCH  
+  uint8_t high = ADCH; // unlocks both
+ 
+  long result = (high<<8) | low;
+ 
+  result = 1125300L / result; // Calculate Vcc (in mV); 1125300 = 1.1*1023*1000
+  return result; // Vcc in millivolts
+}
+*/
 
 
 

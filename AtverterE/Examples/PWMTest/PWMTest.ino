@@ -4,8 +4,8 @@
   Turns on PWM and sweeps duty cycle between 33% and 66%.
   Reports voltages and currents to serial terminal (baud rate 9600).
 
-  modified 20 Sep 2022
-  by Daniel Gerber
+  created September 20 2022 by Daniel Gerber
+  modified September 21 2022 by Daniel Gerber
 */
 
 #include <AtverterE.h>
@@ -36,8 +36,15 @@ void controlUpdate(void)
   atverterE.setDutyCycle(dutyCycle);
   Serial.print("PWM Duty Cycle = ");
   Serial.print(atverterE.getDutyCycle());
-  Serial.print("/1024, ");
-  
+  Serial.print("/1024, VH = ");
+  Serial.print(atverterE.getActualVH());
+  Serial.print("mV, IH = ");  
+  Serial.print(atverterE.getIH());
+  Serial.print("mA, VL = ");  
+  Serial.print(atverterE.getActualVL());
+  Serial.print("mV, IL = ");  
+  Serial.print(atverterE.getIL());
+  Serial.println("mA");
   atverterE.setLED(LED1G_PIN, ledState);
   ledState = !ledState;
 }
