@@ -12,10 +12,10 @@
 AtverterE atverterE;
 int ledState = HIGH;
 
-  int dutyCycle;
-  double lowCurrent; //Output Current
-  double highCurrent; //Input Current
-  double currentRatio; // lowCurrent / highCurrent
+int dutyCycle;
+double lowCurrent; //Output Current
+double highCurrent; //Input Current
+double currentRatio; // lowCurrent / highCurrent
 
 
 void setup(void)
@@ -29,7 +29,7 @@ void setup(void)
   atverterE.startPWM();
 
   lowCurrent = 50; //Desired output current eventually find a way to get this value from the user
-  highCurrent = atverterE.getIH; //Input current
+  highCurrent = atverterE.getIH(); //Input current
   dutyCycle = (lowCurrent / highCurrent) * 1024; //buck duty cycle equation
   //currentRatio = (lowCurrent / highCurrent) * 100;
   //dutyCycle = ((currentRatio - 100) / (currentRatio)) * 1024;
