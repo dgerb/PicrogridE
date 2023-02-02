@@ -1,38 +1,37 @@
-/* 
-  Created: 1/25/2023
-  By: Elijah Gordon and Joshua Hutchinson
-
-  Output Current Controller for Buck Converter
-  
-
-*/
-
 #include <AtverterE.h>
 
 AtverterE atverterE;
 int ledState = HIGH;
 
-int dutyCycle;
-double lowCurrent; //Output Current
-double highCurrent; //Input Current
-double currentRatio; // lowCurrent / highCurrent
+
+
+  int dutyCycle;
+  double lowVoltage; //Output Voltage
+  double highVoltage; //Input Voltage
+  double voltageRatio;
+  double lowCurrentSet;
+  double lowCurrentActual;
+  double averagingFilter;
+  int counter = 0;
+  double filterOutput;
 
 
 void setup(void)
 {
-  atverterE.setupPinMode(); //Get pins setup
-  atverterE.initializePWMTimer(); //Setup Timers
+  atverterE.setupPinMode();
+  atverterE.initializePWMTimer();
 
-  atverterE.initializeInterruptTimer(50, &controlUpdate); //Get interrupts enabled
+
+  atverterE.initializeInterruptTimer(50, &controlUpdate);
   Serial.begin(9600);
   atverterE.setDutyCycle(256);
   atverterE.startPWM();
 
-  lowCurrent = 50; //Desired output current eventually find a way to get this value from the user
-  highCurrent = atverterE.getIH(); //Input current
-  dutyCycle = (lowCurrent / highCurrent) * 1024; //buck duty cycle equation
-  //currentRatio = (lowCurrent / highCurrent) * 100;
-  //dutyCycle = ((currentRatio - 100) / (currentRatio)) * 1024;
+  lowVoltage = 1000;
+  lowCurrentSet = 400;
+  highVoltage = atverterE.getActualVH();
+  //dutyCycle = (lowVoltage / highVoltage) * 1024; //buck duty cycle equation
+  dutyCycle = (lowVoltage / highVoltage) * 1024;
 }
 
 void loop(void)
@@ -41,22 +40,42 @@ void loop(void)
 
 void controlUpdate(void)
 {
-  atverterE.setDutyCycle(dutyCycle);
-//
-//  int actualVL = atverterE.getActualVL();
-//
-//  if(actualVL < lowVoltage)
-//  {
-//    dutyCycle += ( ((actualVL - lowVoltage) / actual) * 100);
-//  }
-//  if(actualVL > lowVoltage)
-//  {
-//    dutyCycle -= 2;
-//  }
+
+
+  lowCurrentActual = -atverterE.getIL();
+
+
+  if(counter < 10)
+  {
+    averagingFilter += lowCurrentActual;
+  }
+  else
+  {
+    averagingFilter = lowCurrentActual;
+    counter = 0;
+  }
+  counter++;
+  filterOutput = averagingFilter / counter;
+
+
+  if(filterOutput > lowCurrentSet)
+  {
+    lowVoltage -= 10;
+  }
+  if(filterOutput < lowCurrentSet)
+  {
+    lowVoltage += 10;
+  }
+
+  highVoltage = atverterE.getActualVH();
+  dutyCycle = (lowVoltage / highVoltage) * 1024;
+
 
   atverterE.setDutyCycle(dutyCycle);
-  Serial.println(highCurrent);
-  Serial.println(currentRatio);
+  Serial.println(highVoltage);
+  Serial.println(lowVoltage);
+  Serial.println(filterOutput);
+  Serial.println(voltageRatio);
   Serial.println(dutyCycle);
   Serial.print("PWM Duty Cycle = ");
   Serial.print(atverterE.getDutyCycle());
