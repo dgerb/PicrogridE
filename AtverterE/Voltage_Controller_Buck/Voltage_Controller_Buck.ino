@@ -12,10 +12,12 @@
 AtverterE atverterE;
 int ledState = HIGH;
 
-  int dutyCycle;
-  double lowVoltage; //Output Voltage
-  double highVoltage; //Input Voltage
-  double voltageRatio; // lowVoltage / highVoltage
+int dutyCycle;
+double lowVoltage; //Output Voltage
+double highVoltage; //Input Voltage
+double prevHighVoltage = 0;
+double voltageRatio; // lowVoltage / highVoltage
+double actualLowVoltage; //Actual Output Voltage
 
 
 void setup(void)
@@ -23,7 +25,7 @@ void setup(void)
   atverterE.setupPinMode(); //Get pins setup
   atverterE.initializePWMTimer(); //Setup Timers
 
-  atverterE.initializeInterruptTimer(50, &controlUpdate); //Get interrupts enabled
+  atverterE.initializeInterruptTimer(10, &controlUpdate); //Get interrupts enabled
   Serial.begin(9600);
   atverterE.setDutyCycle(256);
   atverterE.startPWM();
@@ -61,18 +63,35 @@ void loop(void)
 
 void controlUpdate(void)
 {
-  atverterE.setDutyCycle(dutyCycle);
-//
-//  int actualVL = atverterE.getActualVL();
-//
-//  if(actualVL < lowVoltage)
-//  {
-//    dutyCycle += ( ((actualVL - lowVoltage) / actual) * 100);
-//  }
-//  if(actualVL > lowVoltage)
-//  {
-//    dutyCycle -= 2;
-//  }
+  highVoltage = atverterE.getActualVH();
+  actualLowVoltage = atverterE.getActualVL();
+
+  //dutyCycle = (lowVoltage / highVoltage) * 1024; //buck duty cycle equation
+
+  if(abs(actualLowVoltage - lowVoltage) > 250){
+    if (abs(highVoltage - prevHighVoltage) > 999)
+    {
+      dutyCycle = (lowVoltage / highVoltage) * 1024;
+      // Serial.println("change detected");
+      // Serial.println(highVoltage - prevHighVoltage);
+      prevHighVoltage = highVoltage;
+    }
+    else if(actualLowVoltage < lowVoltage)
+    {
+      dutyCycle = dutyCycle * (((lowVoltage - actualLowVoltage) / actualLowVoltage) + 1);
+      //dutyCycle += 2;
+    }
+    else if(actualLowVoltage > lowVoltage)
+    {
+      dutyCycle = dutyCycle * ((lowVoltage - actualLowVoltage) / actualLowVoltage);
+      //dutyCycle -= 2;
+    }
+
+
+
+    atverterE.setDutyCycle(dutyCycle);
+    //dutyCycle = (lowVoltage / highVoltage) * 1024; //buck duty cycle equation
+  }
 
   atverterE.setDutyCycle(dutyCycle);
   Serial.println(highVoltage);
