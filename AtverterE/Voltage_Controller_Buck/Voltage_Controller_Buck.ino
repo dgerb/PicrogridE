@@ -68,7 +68,7 @@ void controlUpdate(void)
 
   //dutyCycle = (lowVoltage / highVoltage) * 1024; //buck duty cycle equation
 
-  if(abs(actualLowVoltage - lowVoltage) > 250){
+  if(abs(actualLowVoltage - lowVoltage) > 500) { //Smooths out the output by keeping same dutycycle unless difference between
     if (abs(highVoltage - prevHighVoltage) > 999)
     {
       dutyCycle = (lowVoltage / highVoltage) * 1024;
@@ -76,21 +76,32 @@ void controlUpdate(void)
       // Serial.println(highVoltage - prevHighVoltage);
       prevHighVoltage = highVoltage;
     }
-    else if(actualLowVoltage < lowVoltage)
+    else if((actualLowVoltage < lowVoltage))
     {
+      //double percentDiff1 = (lowVoltage - actualLowVoltage) / actualLowVoltage;
+      //double newDutyCycle1 = dutyCycle * (percentDiff1 + 1);
+      //dutyCycle = (int) newDutyCycle1; // dutyCycle * (((lowVoltage - actualLowVoltage) / actualLowVoltage) + 1);
       dutyCycle = dutyCycle * (((lowVoltage - actualLowVoltage) / actualLowVoltage) + 1);
+
       //dutyCycle += 2;
     }
-    else if(actualLowVoltage > lowVoltage)
+    else if((actualLowVoltage > lowVoltage))
     {
-      dutyCycle = dutyCycle * ((lowVoltage - actualLowVoltage) / actualLowVoltage);
+      //double percentDiff2 = (lowVoltage - actualLowVoltage) / actualLowVoltage;
+      //double newDutyCycle2 = dutyCycle * (percentDiff2 + 1);
+      //dutyCycle = (int) newDutyCycle2; //dutyCycle * ((actualLowVoltage - lowVoltage) / actualLowVoltage);
+
+      dutyCycle = dutyCycle * (((lowVoltage - actualLowVoltage) / actualLowVoltage) + 1);
+      
+      
       //dutyCycle -= 2;
     }
 
-
-
     atverterE.setDutyCycle(dutyCycle);
     //dutyCycle = (lowVoltage / highVoltage) * 1024; //buck duty cycle equation
+  }
+  else {
+
   }
 
   atverterE.setDutyCycle(dutyCycle);
@@ -111,3 +122,19 @@ void controlUpdate(void)
   atverterE.setLED(LED1G_PIN, ledState);
   ledState = !ledState;
 }
+
+// int calculateDutyCycle(double lowVolt, double actualLowVolt, double highVolt, double actualHighVolt) {
+//   int dutycycle;
+
+  
+
+//   if () {
+//   dutycycle = dutyCycle * (((lowVoltage - actualLowVoltage) / actualLowVoltage) + 1);
+//   }
+//   else {
+//     dutycyle = dutyCycle;
+//   }
+
+//   return dutycycle;
+
+// }
