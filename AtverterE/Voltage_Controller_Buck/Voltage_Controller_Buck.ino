@@ -59,21 +59,24 @@ void controlUpdate(void) {
   actualLowVoltage = atverterE.getActualVL();
 
 
-  if (abs(highVoltage - prevHighVoltage) > INPUT_VOLTAGE_JUMP) {
+  if (abs((int32_t)highVoltage - (int32_t)prevHighVoltage) > INPUT_VOLTAGE_JUMP) {
     dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024;
     // Serial.println("change detected");
     // Serial.println(highVoltage - prevHighVoltage);
     //SUM = READINGS[INDEX];
     prevHighVoltage = highVoltage;
-  } else if (abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE) {
-    // Serial.print("\n");
-    // Serial.print(actualLowVoltage);
-    // Serial.print(", ");
-    // Serial.print(lowVoltage);
-    // Serial.print("\n");
-    // Serial.print("actualLowVoltage - lowVoltage = ");
-    // Serial.print(abs((int32_t)actualLowVoltage - (int32_t)lowVoltage));  //Math in C uses variables ranges so since actual and lowvoltage are unsigned have to convert to signed before doing math
-    // Serial.print("\n\n");
+  } else if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE) && (abs((int32_t)actualLowVoltage - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)) {
+    Serial.print("\n\n");
+    Serial.print("TRIGGERED");
+    Serial.print(", ");
+    Serial.print(actualLowVoltage);
+    Serial.print(", ");
+    Serial.print(AVERAGED);
+    Serial.print(", ");
+    Serial.print(abs((int32_t)AVERAGED - (int32_t)lowVoltage));
+    Serial.print(", ");
+    Serial.print(abs((int32_t)actualLowVoltage - (int32_t)lowVoltage));
+    Serial.print("\n\n");
 
 
     if ((actualLowVoltage < lowVoltage)) {
