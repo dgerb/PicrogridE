@@ -10,7 +10,7 @@
 #define INPUT_VOLTAGE_JUMP 999
 #define OUTPUT_VOLTAGE_JUMP 499
 #define OUTPUT_VOLTAGE_STEADY_STATE 99
-#define WINDOW_SIZE 50
+#define WINDOW_SIZE 25
 
 AtverterE atverterE;
 int ledState = HIGH;
@@ -55,8 +55,8 @@ void loop(void) {
 }
 
 void controlUpdate(void) {
-  highVoltage = (double)atverterE.getActualVH() * 0.9681 +  ;
-  actualLowVoltage = atverterE.getActualVL();
+  highVoltage = ((double)atverterE.getActualVH() * 1.02) - 92;
+  actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36;
 
 
   if (abs((int32_t)highVoltage - (int32_t)prevHighVoltage) > INPUT_VOLTAGE_JUMP) {
