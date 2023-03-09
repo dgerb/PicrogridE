@@ -55,7 +55,7 @@ void loop(void) {
 }
 
 void controlUpdate(void) {
-  highVoltage = atverterE.getActualVH();
+  highVoltage = (double)atverterE.getActualVH() * 0.9681 +  ;
   actualLowVoltage = atverterE.getActualVL();
 
 
