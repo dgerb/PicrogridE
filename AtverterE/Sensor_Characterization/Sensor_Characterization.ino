@@ -33,7 +33,7 @@ int32_t AVERAGED2 = 0;
 
 
 void setup(void) {
-  lowVoltage = 5000;                              //Desired output voltage eventually find a way to get this value from the user
+  lowVoltage = 15000;                              //Desired output voltage eventually find a way to get this value from the user
   highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
   dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
 
@@ -68,13 +68,13 @@ void controlUpdate(void) {
 
   //Uncomment for Current Measurements
   SUM2 = SUM2 - READINGS2[INDEX];
-  VALUE2 = ((double)-atverterE.getIL() * 1.05) + 24;  // Collect the actual low voltage value
+  VALUE2 = ((double)(-atverterE.getIL()) * 1.05) + 29;  // Collect the actual low voltage value
   READINGS2[INDEX] = VALUE2;                          // Add the newest reading to the window
   SUM2 = SUM2 + VALUE2;                               // Add the newest reading to the sum
   INDEX = (INDEX + 1) % WINDOW_SIZE;                  // Increment the index, and wrap to 0 if it exceeds the window size
   AVERAGED2 = SUM2 / WINDOW_SIZE;
 
-
+  // Voltage Measurements
   // Serial.print("\n\n");
   // Serial.print("Average High Voltage: ");
   // Serial.print(AVERAGED1);
@@ -82,28 +82,13 @@ void controlUpdate(void) {
   // Serial.print(AVERAGED2);
   // Serial.print("\n\n");
 
+  // Current Measurements
   Serial.print("\n\n");
   Serial.print("Average High Current: ");
   Serial.print(AVERAGED1);
   Serial.print(";     Average Low Current: ");
   Serial.print(AVERAGED2);
+  Serial.print(";     Duty Cycle: ");
+  Serial.print(atverterE.getDutyCycle());
   Serial.print("\n\n");
-
-
-
-  //atverterE.setDutyCycle(dutyCycle);
-  // Serial.print("PWM Duty Cycle = ");
-  // Serial.print(atverterE.getDutyCycle());
-  // Serial.print("/1024, VH = ");
-  // Serial.print(atverterE.getActualVH());
-  // Serial.print("mV, IH = ");
-  // Serial.print(atverterE.getIH());
-  // Serial.print("mA, VL = ");
-  // Serial.print(atverterE.getActualVL());
-  // Serial.print("mV, IL = ");
-  // Serial.print(atverterE.getIL());
-  // Serial.println("mA");
-  // atverterE.setLED(LED1G_PIN, ledState);
-  // Serial.print("\n\n");
-  // ledState = !ledState;
 }
