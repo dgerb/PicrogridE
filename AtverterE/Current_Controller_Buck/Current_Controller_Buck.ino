@@ -9,7 +9,7 @@
 
 #define INPUT_VOLTAGE_JUMP 999
 #define OUTPUT_VOLTAGE_JUMP 499
-#define OUTPUT_CURRENT_STEADY_STATE 199
+#define OUTPUT_CURRENT_STEADY_STATE 99
 #define WINDOW_SIZE 50
 
 AtverterE atverterE;
@@ -34,7 +34,7 @@ int32_t AVERAGED = 0;
 
 void setup(void) {
   lowVoltage = 5000;  //Desired output voltage eventually find a way to get this value from the user
-  lowCurrent = 500;
+  lowCurrent = 2000;
   highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
   dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
 
@@ -54,7 +54,7 @@ void loop(void) {
 void controlUpdate(void) {
   highVoltage = atverterE.getActualVH();
   //actualLowVoltage = atverterE.getActualVL();
-  actualLowCurrent = ((double)(-atverterE.getIL()) * 1.05) + 29;  // Negative since current put in backwards
+  actualLowCurrent = ((double)(-atverterE.getIL()) * 1.05) + 29;  // Negative since hall effect sensor put in backwards
 
   //if (abs((int32_t)highVoltage - (int32_t)prevHighVoltage) > INPUT_VOLTAGE_JUMP) {
   //  dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024;
@@ -104,10 +104,11 @@ void controlUpdate(void) {
 
 
   //dutyCycle = (lowVoltage * 1024 / highVoltage);
-  //atverterE.setDutyCycle(dutyCycle);
-  atverterE.setDutyCycle(530);
+  atverterE.setDutyCycle(dutyCycle);
+  //atverterE.setDutyCycle(600);
   //Serial.print("PWM Duty Cycle = ");
-  //Serial.print(atverterE.getDutyCycle());
+  Serial.print(atverterE.getDutyCycle());
+  Serial.print("\n");
   //Serial.print("/1024, VH = ");
   // Serial.print(atverterE.getActualVH());
   // Serial.print("mV, IH = ");
@@ -115,9 +116,9 @@ void controlUpdate(void) {
   // Serial.print("mA, VL = ");
   // Serial.print(atverterE.getActualVL());
   // Serial.print("mV, IL = ");
-  // Serial.print(atverterE.getIL());
+  Serial.print(atverterE.getIL());
   // Serial.println("mA");
   // atverterE.setLED(LED1G_PIN, ledState);
-  //Serial.print("\n\n");
+  Serial.print("\n\n");
   ledState = !ledState;
 }
