@@ -32,8 +32,8 @@ uint32_t AVERAGED = 0;
 
 void setup(void) {
   lowVoltage = 5000;                              //Desired output voltage eventually find a way to get this value from the user
-  highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
-  dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
+  //highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
+  //dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
 
   atverterE.setupPinMode();        //Get pins setup
   atverterE.initializePWMTimer();  //Setup Timers
@@ -49,14 +49,11 @@ void loop(void) {
 }
 
 void controlUpdate(void) {
-  highVoltage = ((double)atverterE.getActualVH() * 1.02) - 92;
-  actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36;
+  //highVoltage = ((double)atverterE.getActualVH() * 1.02) - 92;
+  //actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36; // Atverter1 
+  actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104; // Atverter2
 
-  if (abs((int32_t)highVoltage - (int32_t)prevHighVoltage) > INPUT_VOLTAGE_JUMP) {
-    dutyCycle = (lowVoltage * 1024 / highVoltage);
-    prevHighVoltage = highVoltage;
-
-  } else if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)/* && (abs((int32_t)actualLowVoltage - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)*/) {
+  if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)/* && (abs((int32_t)actualLowVoltage - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)*/) {
     // Serial.print("\n\n");
     // Serial.print("TRIGGERED");
     // Serial.print(", ");
@@ -91,9 +88,9 @@ void controlUpdate(void) {
   // Serial.print(",");
   // Serial.print(SUM);
   // Serial.print(",");
-  //Serial.print(AVERAGED);
-  //Serial.print(" ");
-  // Serial.print("\n\n");
+  Serial.print(AVERAGED);
+  // Serial.print(" ");
+  Serial.print("\n\n");
 
 
   //dutyCycle = (lowVoltage * 1024 / highVoltage);
@@ -102,17 +99,17 @@ void controlUpdate(void) {
   // //Serial.println(voltageRatio);
   //Serial.println(dutyCycle);
   // Serial.print("PWM Duty Cycle = ");
-  Serial.print(atverterE.getDutyCycle());
+  // Serial.print(atverterE.getDutyCycle());
   // Serial.print("/1024, VH = ");
   //Serial.print(atverterE.getActualVH());
   // Serial.print("mV, IH = ");
   // Serial.print(atverterE.getIH());
   // Serial.print("mA, VL = ");
-  //Serial.print(atverterE.getActualVL());
+  // Serial.print(atverterE.getActualVL());
   // Serial.print("mV, IL = ");
   // Serial.print(atverterE.getIL());
   // Serial.println("mA");
   // atverterE.setLED(LED1G_PIN, ledState);
-  Serial.print("\n\n");
+  // Serial.print("\n\n");
   ledState = !ledState;
 }
