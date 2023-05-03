@@ -7,4 +7,12 @@
 
 
 
+class Voltage_Controller
+{
+    public:
+    
+}
+
+
+
 #endif
