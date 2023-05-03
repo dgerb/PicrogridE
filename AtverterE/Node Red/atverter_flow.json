@@ -1,0 +1,464 @@
+[
+    {
+        "id": "b3bbfece52d338a7",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "2c4a24a47e55f9c2",
+        "type": "debug",
+        "z": "b3bbfece52d338a7",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "146e76c8ccc8d505",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "function 2",
+        "func": "\nconst fromArduino = msg.payload.split(\" \");\n\nmsg.topic = fromArduino[0];\n\n\n\n//msg.payload = fromArduino;\nmsg.payload = parseInt(fromArduino[1]/1000);\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 500,
+        "wires": [
+            [
+                "2c4a24a47e55f9c2",
+                "15dfbba63147a427",
+                "84a458ac2e77fba0",
+                "78697f4acc48e191"
+            ]
+        ]
+    },
+    {
+        "id": "3a82b835.c57d48",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Rate Limiter",
+        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 500,
+        "wires": [
+            [
+                "f2195c6841513835"
+            ]
+        ]
+    },
+    {
+        "id": "15dfbba63147a427",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VH filter",
+        "func": "if (msg.topic == \"VH\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 500,
+        "wires": [
+            [
+                "3a82b835.c57d48"
+            ]
+        ]
+    },
+    {
+        "id": "84a458ac2e77fba0",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "PWM filter",
+        "func": "if (msg.topic == \"PWM\")\n{\n    msg.payload = msg.payload * 1000;\n    return msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 580,
+        "wires": [
+            [
+                "aa16679380e6205f"
+            ]
+        ]
+    },
+    {
+        "id": "78697f4acc48e191",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VL filter",
+        "func": "if (msg.topic == \"VL\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 660,
+        "wires": [
+            [
+                "771207e759ed7ee6"
+            ]
+        ]
+    },
+    {
+        "id": "eb66841eab96214b",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "e24b02054ab5a352",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "PWM",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1000",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1050,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa16679380e6205f",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Rate Limiter",
+        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 580,
+        "wires": [
+            [
+                "eb66841eab96214b"
+            ]
+        ]
+    },
+    {
+        "id": "6b378d2f0027d123",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "e24b02054ab5a352",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Low Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "10",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "771207e759ed7ee6",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Rate Limiter",
+        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 870,
+        "y": 660,
+        "wires": [
+            [
+                "6b378d2f0027d123"
+            ]
+        ]
+    },
+    {
+        "id": "f2195c6841513835",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "e24b02054ab5a352",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "High Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "10",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dae8234f.2517e",
+        "type": "inject",
+        "z": "b3bbfece52d338a7",
+        "name": "0.5s tick",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1384.5999755859375,
+        "y": 277.20001220703125,
+        "wires": [
+            [
+                "56a6f8f2.a95908"
+            ]
+        ]
+    },
+    {
+        "id": "56a6f8f2.a95908",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Toggle output on input",
+        "func": "\n// If it does exist make it the inverse of what it was or else initialise it to false\n// (context variables persist between calls to the function)\ncontext.level = !context.level || false;\n\n// set the payload to the level and return\nmsg.payload = context.level;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1632.5999755859375,
+        "y": 277.20001220703125,
+        "wires": [
+            [
+                "2db61802.d249e8"
+            ]
+        ]
+    },
+    {
+        "id": "2db61802.d249e8",
+        "type": "arduino out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "pin": "13",
+        "state": "OUTPUT",
+        "arduino": "d7663aaf.47194",
+        "x": 1845.0999755859375,
+        "y": 277.20001220703125,
+        "wires": []
+    },
+    {
+        "id": "4a19bd19becc5ee9",
+        "type": "inject",
+        "z": "b3bbfece52d338a7",
+        "name": "0.5s tick",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 500,
+        "y": 840,
+        "wires": [
+            [
+                "d4c7a75d1728eb4b"
+            ]
+        ]
+    },
+    {
+        "id": "a9b049db4bd0e8bc",
+        "type": "arduino out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "pin": "13",
+        "state": "OUTPUT",
+        "arduino": "a34c3b913af2ab9e",
+        "x": 1020,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "d4c7a75d1728eb4b",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Toggle output on input",
+        "func": "\n// If it does exist make it the inverse of what it was or else initialise it to false\n// (context variables persist between calls to the function)\ncontext.level = !context.level || false;\n\n// set the payload to the level and return\nmsg.payload = context.level;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 708,
+        "y": 840,
+        "wires": [
+            [
+                "a9b049db4bd0e8bc"
+            ]
+        ]
+    },
+    {
+        "id": "c89043811b4c39fe",
+        "type": "serial in",
+        "z": "b3bbfece52d338a7",
+        "name": "ATverter 1",
+        "serial": "608c62d3cab3ed67",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "146e76c8ccc8d505"
+            ]
+        ]
+    },
+    {
+        "id": "e24b02054ab5a352",
+        "type": "ui_group",
+        "name": "ATverter 1",
+        "tab": "bc62c28c4de73e00",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d7663aaf.47194",
+        "type": "arduino-board",
+        "device": ""
+    },
+    {
+        "id": "a34c3b913af2ab9e",
+        "type": "arduino-board",
+        "device": ""
+    },
+    {
+        "id": "608c62d3cab3ed67",
+        "type": "serial-port",
+        "serialport": "COM15",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "bc62c28c4de73e00",
+        "type": "ui_tab",
+        "name": "ATverter Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
