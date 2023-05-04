@@ -1,14 +1,6 @@
-/* 
-  Created: 1/25/2023
-  By: Elijah Gordon and Joshua Hutchinson
-  Output Voltage Controller for Buck Converter
-  
-*/
+#ifndef Voltage_Controller_Buck_h
+#define Voltage_Controller_Buck_h
 
-#ifndef VOLTAGE_CONTROLLER_BUCK_H
-#define VOLTAGE_CONTROLLER_BUCK_H
-
-#include "Arduino.h"
 #include <AtverterE.h>
 
 #define INPUT_VOLTAGE_JUMP 999
@@ -17,18 +9,18 @@
 #define WINDOW_SIZE 50
 
 class Voltage_Controller_Buck {
-  public:
+public:
     Voltage_Controller_Buck();
     void begin();
     void update();
-  private:
+    uint32_t getOutputVoltage();
+private:
     AtverterE atverterE;
-    uint16_t dutyCycle; //Dutycyle of the switches
-    uint32_t lowVoltage;   //Output Voltage
-    uint32_t highVoltage;  //Input Voltage
+    uint16_t dutyCycle;
+    uint32_t lowVoltage;   
+    uint32_t highVoltage;  
     uint32_t prevHighVoltage = 0;
-    uint32_t actualLowVoltage;  //Actual Output Voltage
-
+    uint32_t actualLowVoltage;  
     int INDEX = 0;
     uint32_t VALUE = 0;
     uint32_t SUM = 0;
