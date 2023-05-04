@@ -1,6 +1,7 @@
 #ifndef Voltage_Controller_Buck_h
 #define Voltage_Controller_Buck_h
 
+#include "Arduino.h"
 #include <AtverterE.h>
 
 #define INPUT_VOLTAGE_JUMP 999
