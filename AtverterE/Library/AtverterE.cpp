@@ -39,14 +39,14 @@ void AtverterE::initializePWMTimer()
 // initializes timer 2 as the periodic control timer
 // inputs: control period in milliseconds, controller interrupt function reference
 // example usage: atverterE.initializeInterruptTimer(1, &controlUpdate);
-/*
+
 void AtverterE::initializeInterruptTimer(int periodms, void interruptFunction())
 {
   // MsTimer2::set(period in milliseconds, interrupt function to call)
   MsTimer2::set(periodms, interruptFunction);
   MsTimer2::start(); // start timer 2 and interrupt handler
 }
-*/
+
 // intializes timer 1 as PWM timer and timer 2 as control interrupt timer
 void AtverterE::startPWM()
 {
