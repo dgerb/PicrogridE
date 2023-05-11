@@ -7,15 +7,13 @@
 
 #include <AtverterE.h>
 
-#define INPUT_VOLTAGE_JUMP 999
-#define OUTPUT_VOLTAGE_JUMP 499
-#define OUTPUT_VOLTAGE_STEADY_STATE 99
+#define OUTPUT_VOLTAGE_STEADY_STATE 499
 #define WINDOW_SIZE 50
 
 AtverterE atverterE;
 int ledState = HIGH;
 
-uint16_t dutyCycle;
+uint16_t dutyCycle = 200;
 uint32_t lowVoltage;   //Input Voltage
 uint32_t highVoltage;  //Output Voltage
 uint32_t actualHighVoltage;  //Actual Output Voltage
@@ -29,7 +27,7 @@ uint32_t AVERAGED = 0;
 
 
 void setup(void) {
-  highVoltage = 10000;                              //Desired output voltage eventually find a way to get this value from the user
+  highVoltage = 5000;                              //Desired output voltage eventually find a way to get this value from the user
 
   atverterE.setupPinMode();        //Get pins setup
   atverterE.initializePWMTimer();  //Setup Timers
@@ -37,8 +35,10 @@ void setup(void) {
   atverterE.initializeInterruptTimer(1, &controlUpdate);  //Get interrupts enabled
   Serial.begin(9600);
 
+  //dutyCycle = (lowVoltage * 1024 / highVoltage);
   atverterE.setDutyCycle(dutyCycle);
   atverterE.startPWM();
+  
 }
 
 void loop(void) {
@@ -51,24 +51,15 @@ void controlUpdate(void) {
   actualHighVoltage = ((double)atverterE.getActualVH() * 0.92) + 20; // Atverter2
 
   if ((abs((int32_t)AVERAGED - (int32_t)highVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)) {
-    // Serial.print("\n\n");
-    // Serial.print("TRIGGERED");
-    // Serial.print(", ");
-    // Serial.print(actualLowVoltage);
-    // Serial.print(", ");
-    // Serial.print(AVERAGED);
-    // Serial.print(", ");
-    // Serial.print(abs((int32_t)AVERAGED - (int32_t)lowVoltage));
-    // Serial.print(", ");
-    // Serial.print(abs((int32_t)actualLowVoltage - (int32_t)lowVoltage));
-    // Serial.print("\n\n");
 
-    if ((actualHighVoltage < highVoltage)) {
-      dutyCycle += 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
+    if ((actualHighVoltage < highVoltage) && (dutyCycle > 0)) {
+      dutyCycle -= 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
+      //Serial.print("HI");
     }
 
-    else if ((actualHighVoltage > highVoltage)) {
-      dutyCycle -= 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
+    else if ((actualHighVoltage > highVoltage) && (dutyCycle < 1024)) {
+      dutyCycle += 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
+      //Serial.print("Hello");
     }
   }
 
@@ -85,14 +76,14 @@ void controlUpdate(void) {
   // Serial.print(",");
   // Serial.print(SUM);
   // Serial.print(",");
-  // Serial.print(AVERAGED);
+  Serial.print(AVERAGED);
   // Serial.print(" ");
-  // Serial.print("\n\n");
+  Serial.print("\n\n");
 
 
   //dutyCycle = (lowVoltage * 1024 / highVoltage);
-  // atverterE.setDutyCycle(dutyCycle);
-  atverterE.setDutyCycle(250);
+  atverterE.setDutyCycle(dutyCycle);
+  //atverterE.setDutyCycle(400);
   //Serial.println(highVoltage);
   // //Serial.println(voltageRatio);
   //Serial.println(dutyCycle);

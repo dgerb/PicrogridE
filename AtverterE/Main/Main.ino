@@ -7,11 +7,10 @@
 
 #include <AtverterE.h>
 
-
-
 #define INPUT_VOLTAGE_JUMP 999
 #define OUTPUT_VOLTAGE_JUMP 499
 #define OUTPUT_VOLTAGE_STEADY_STATE 99
+#define OUTPUT_CURRENT_STEADY_STATE 99
 #define WINDOW_SIZE 50
 
 AtverterE atverterE;
@@ -22,9 +21,9 @@ uint16_t dutyCycle;
 uint32_t lowVoltage;   //Output Voltage
 uint32_t highVoltage;  //Input Voltage
 uint32_t prevHighVoltage = 0;
-//double voltageRatio; // lowVoltage / highVoltage
 uint32_t actualLowVoltage;  //Actual Output Voltage
 uint32_t actualHighVoltage;  //Actual Output Voltage
+int32_t actualLowCurrent;   //Actual Output Current
 
 int INDEX = 0;
 uint32_t VALUE = 0;
@@ -35,13 +34,14 @@ uint32_t AVERAGED = 0;
 
 char message[20];
 int messagePosition = 0;
-String state = "buck";
-double setPoint;
+String state = "VoltBuck";
+uint32_t setPoint;
 
 
 void setup(void) {
 
   lowVoltage = 5000;                              //Desired output voltage eventually find a way to get this value from the user
+  setPoint = 5000;
   //highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
   //dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
 
@@ -68,28 +68,28 @@ void loop(void) {
 
 
 void controlUpdate(void) {
-  if(state == "boost")
+  if(state == "VoltBoost")
   {
     boostControl(setPoint);
   }
 
-  if(state == "buck")
+  if(state == "VoltBuck")
   {
     buckControl(setPoint);
+  }
+
+  if(state == "CurrentBuck")
+  {
+    currentBuckControl(setPoint);
   }
   
 }
 
-
-
-
-
-
-void buckControl(double lowVoltage)
+void buckControl(uint32_t lowVoltage)
 {
    actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104; // Atverter2
 
-  if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)/* && (abs((int32_t)actualLowVoltage - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)*/) {
+  if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)) {
     if ((actualLowVoltage < lowVoltage)) {
       dutyCycle += 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
     }
@@ -111,7 +111,32 @@ void buckControl(double lowVoltage)
   ledState = !ledState;
 }
 
-void boostControl(double highVoltage)
+void currentBuckControl(int32_t lowCurrent) {
+  actualLowCurrent = ((double)(-atverterE.getIL()) * 0.93) + 10; //Atverter2
+
+  if ((abs(AVERAGED - lowCurrent) > OUTPUT_CURRENT_STEADY_STATE)) {
+
+
+    if ((actualLowCurrent < lowCurrent)) {
+      dutyCycle += 1;                                 // If the output voltage is close to desired output then slowly move towards the more desired value
+    } else if ((actualLowCurrent > lowCurrent)) {
+      dutyCycle -= 1;                                 // If the output voltage is close to desired output then slowly move towards the more desired value
+    }
+  }
+
+  // Use the moving average filter
+  SUM = SUM - READINGS[INDEX];        // Remove the oldest entry from the sum
+  VALUE = actualLowCurrent;           // Collect the actual low voltage value
+  READINGS[INDEX] = VALUE;            // Add the newest reading to the window
+  SUM = SUM + VALUE;                  // Add the newest reading to the sum
+  INDEX = (INDEX + 1) % WINDOW_SIZE;  // Increment the index, and wrap to 0 if it exceeds the window size
+  AVERAGED = SUM / WINDOW_SIZE;       // Divide the sum of the window by the window size for the result
+
+  atverterE.setDutyCycle(dutyCycle);
+  ledState = !ledState;
+}
+
+void boostControl(uint32_t highVoltage)
 {
   actualHighVoltage = ((double)atverterE.getActualVH() * 0.92) + 20; // Atverter2
 
@@ -140,19 +165,8 @@ void boostControl(double highVoltage)
 }
 
 
-
-
-
-
-
-
-
-
-
 void serialControl(void)
 {
-
-
   String messageSTR;
 
 
@@ -177,9 +191,6 @@ void serialControl(void)
     //  Serial.println(messageSTR);
       //Serial.println(messageSTR.substring(0, 6));
    //   }
-
-
-
     
     if((messageSTR == "Request"))
     {
@@ -188,6 +199,12 @@ void serialControl(void)
 
         Serial.print("VH ");
         Serial.println(atverterE.getActualVH());
+
+        Serial.print("IL ");
+        Serial.println(-atverterE.getIL());
+
+        Serial.print("IH ");
+        Serial.println(atverterE.getIH());
         
         Serial.print("PWM ");
         Serial.println(atverterE.getDutyCycle());
@@ -195,7 +212,6 @@ void serialControl(void)
         Serial.print("STATE ");
         Serial.println(state);
         
-
         Serial.print("SETPOINT ");
         Serial.println(setPoint);
 
@@ -203,20 +219,28 @@ void serialControl(void)
         messageSTR = "done";
     }
 
-    else if(messageSTR.substring(0, 7) == "toBoost")
+    else if(messageSTR.substring(0, 7) == "vcBoost")
     {
-        state = "boost";
+        state = "VoltBoost";
         Serial.println(messageSTR);
+        setPoint = 15000; //Default Setpoint
 
     }
-    else if(messageSTR.substring(0, 7) == "tooBuck")
+    else if(messageSTR.substring(0, 7) == "volBuck")
     {
-      state = "buck";
+      state = "VoltBuck";
       Serial.println(messageSTR);
+      setPoint = 5000; //Default Setpoint
+    }
+    else if(messageSTR.substring(0, 7) == "curBuck")
+    {
+      state = "CurrentBuck";
+      Serial.println(messageSTR);
+      setPoint = 1000; //Default Setpoint
     }
     else if(isAllDigits(messageSTR))
     {
-      setPoint = messageSTR.toDouble();
+      setPoint = messageSTR.toInt();
       //Serial.println("ACK acknowledged");
       Serial.print(messageSTR);
       Serial.println("mV");
