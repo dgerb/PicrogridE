@@ -47,7 +47,13 @@ void setup(void) {
 
 void loop(void) {
 }
-
+/*
+void initializeInterruptTimer(int periodms, void (*interruptFunction)(void)) {
+  // MsTimer2::set(period in milliseconds, interrupt function to call)
+  MsTimer2::set(periodms, interruptFunction);
+  MsTimer2::start(); // start timer 2 and interrupt handler
+}
+*/
 void controlUpdate(void) {
   //highVoltage = ((double)atverterE.getActualVH() * 1.02) - 92;
   //actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36; // Atverter1 

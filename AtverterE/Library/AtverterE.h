@@ -48,8 +48,12 @@ class AtverterE
   // Atmega initialization
     void setupPinMode(); // sets appropriate pinMode() for each const pin
     void initializePWMTimer(); // starts the PWM timer at 62.5 kHz
+/*
     void initializeInterruptTimer(int periodms, // starts periodic control timer
       void (*interruptFunction)(void)); // inputs: period (ms), controller function reference
+      */
+    //void initializeInterruptTimer(int periodms, void interruptFunction());
+    //void initializeInterruptVoltageBuck(int periodms, void (Voltage_Controller_Buck::*methodPtr)());
     void startPWM(); // resets protection latch, enabling the gate driver
   // duty cycle
     void setDutyCycle(int dutyCycle); // sets duty cycle (0 to 1023)
