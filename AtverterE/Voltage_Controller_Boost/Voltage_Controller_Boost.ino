@@ -13,7 +13,7 @@
 AtverterE atverterE;
 int ledState = HIGH;
 
-uint16_t dutyCycle = 200;
+uint16_t dutyCycle;
 uint32_t lowVoltage;   //Input Voltage
 uint32_t highVoltage;  //Output Voltage
 uint32_t actualHighVoltage;  //Actual Output Voltage
@@ -35,7 +35,7 @@ void setup(void) {
   atverterE.initializeInterruptTimer(1, &controlUpdate);  //Get interrupts enabled
   Serial.begin(9600);
 
-  //dutyCycle = (lowVoltage * 1024 / highVoltage);
+  dutyCycle = (highVoltage - lowVoltage) * 1024 / highVoltage); //(Vo - Vi) / Vo
   atverterE.setDutyCycle(dutyCycle);
   atverterE.startPWM();
   
@@ -52,12 +52,12 @@ void controlUpdate(void) {
 
   if ((abs((int32_t)AVERAGED - (int32_t)highVoltage) > OUTPUT_VOLTAGE_STEADY_STATE)) {
 
-    if ((actualHighVoltage < highVoltage) && (dutyCycle > 0)) {
+    if ((AVERAGED < highVoltage) && (dutyCycle > 10)) {
       dutyCycle -= 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
       //Serial.print("HI");
     }
 
-    else if ((actualHighVoltage > highVoltage) && (dutyCycle < 1024)) {
+    else if ((AVERAGED > highVoltage) && (dutyCycle < 1014)) {
       dutyCycle += 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
       //Serial.print("Hello");
     }
