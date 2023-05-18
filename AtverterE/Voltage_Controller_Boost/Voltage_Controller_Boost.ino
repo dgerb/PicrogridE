@@ -27,7 +27,8 @@ uint32_t AVERAGED = 0;
 
 
 void setup(void) {
-  highVoltage = 5000;                              //Desired output voltage eventually find a way to get this value from the user
+  highVoltage = 20000;                              //Desired output voltage eventually find a way to get this value from the user
+  lowVoltage = atverterE.getActualVL();
 
   atverterE.setupPinMode();        //Get pins setup
   atverterE.initializePWMTimer();  //Setup Timers
@@ -35,7 +36,8 @@ void setup(void) {
   atverterE.initializeInterruptTimer(1, &controlUpdate);  //Get interrupts enabled
   Serial.begin(9600);
 
-  dutyCycle = (highVoltage - lowVoltage) * 1024 / highVoltage); //(Vo - Vi) / Vo
+  dutyCycle = (highVoltage - lowVoltage) * 1024 / highVoltage; //(Vo - Vi) / Vo
+  //dutyCycle = 100;
   atverterE.setDutyCycle(dutyCycle);
   atverterE.startPWM();
   
@@ -90,7 +92,7 @@ void controlUpdate(void) {
   // Serial.print("PWM Duty Cycle = ");
   Serial.print(atverterE.getDutyCycle());
   Serial.print("/1024, VH = ");
-  //Serial.print(atverterE.getActualVH());
+  Serial.print(atverterE.getActualVH());
   // Serial.print("mV, IH = ");
   // Serial.print(atverterE.getIH());
   // Serial.print("mA, VL = ");
