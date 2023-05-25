@@ -8,60 +8,45 @@
         "env": []
     },
     {
-        "id": "2c4a24a47e55f9c2",
-        "type": "debug",
+        "id": "1639bec68c5b5dab",
+        "type": "junction",
         "z": "b3bbfece52d338a7",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 660,
-        "y": 340,
-        "wires": []
+        "x": 1360,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e373b72764c890e4",
+        "type": "junction",
+        "z": "b3bbfece52d338a7",
+        "x": 2560,
+        "y": 1000,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "146e76c8ccc8d505",
         "type": "function",
         "z": "b3bbfece52d338a7",
-        "name": "function 2",
-        "func": "\nconst fromArduino = msg.payload.split(\" \");\n\nmsg.topic = fromArduino[0];\n\n\n\n//msg.payload = fromArduino;\nmsg.payload = parseInt(fromArduino[1]/1000);\n\n\n\nreturn msg;",
+        "name": "Payload Parsing",
+        "func": "\nconst fromArduino = msg.payload.split(\" \");\n\nmsg.topic = fromArduino[0];\n\n\n\n//msg.payload = fromArduino;\nif(Number.isInteger(parseInt(fromArduino[1])))\n{\n    msg.payload = parseFloat(fromArduino[1]/1000);\n}\nelse{\n    msg.payload = fromArduino[1];\n}\n\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 360,
+        "x": 380,
         "y": 500,
         "wires": [
             [
-                "2c4a24a47e55f9c2",
                 "15dfbba63147a427",
                 "84a458ac2e77fba0",
-                "78697f4acc48e191"
-            ]
-        ]
-    },
-    {
-        "id": "3a82b835.c57d48",
-        "type": "function",
-        "z": "b3bbfece52d338a7",
-        "name": "Rate Limiter",
-        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 870,
-        "y": 500,
-        "wires": [
-            [
-                "f2195c6841513835"
+                "78697f4acc48e191",
+                "64fc0ad5ddc8e756",
+                "dc81ee852a66ecbc"
             ]
         ]
     },
@@ -80,7 +65,7 @@
         "y": 500,
         "wires": [
             [
-                "3a82b835.c57d48"
+                "f2195c6841513835"
             ]
         ]
     },
@@ -99,7 +84,7 @@
         "y": 580,
         "wires": [
             [
-                "aa16679380e6205f"
+                "eb66841eab96214b"
             ]
         ]
     },
@@ -118,7 +103,7 @@
         "y": 660,
         "wires": [
             [
-                "771207e759ed7ee6"
+                "6b378d2f0027d123"
             ]
         ]
     },
@@ -139,7 +124,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "0",
-        "ymax": "1000",
+        "ymax": "1024",
         "removeOlder": "10",
         "removeOlderPoints": "1000",
         "removeOlderUnit": "1",
@@ -167,25 +152,6 @@
         ]
     },
     {
-        "id": "aa16679380e6205f",
-        "type": "function",
-        "z": "b3bbfece52d338a7",
-        "name": "Rate Limiter",
-        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 870,
-        "y": 580,
-        "wires": [
-            [
-                "eb66841eab96214b"
-            ]
-        ]
-    },
-    {
         "id": "6b378d2f0027d123",
         "type": "ui_chart",
         "z": "b3bbfece52d338a7",
@@ -202,7 +168,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "0",
-        "ymax": "10",
+        "ymax": "50",
         "removeOlder": "10",
         "removeOlderPoints": "1000",
         "removeOlderUnit": "1",
@@ -227,25 +193,6 @@
         "y": 660,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "771207e759ed7ee6",
-        "type": "function",
-        "z": "b3bbfece52d338a7",
-        "name": "Rate Limiter",
-        "func": "var interval = (100); // minimum interval between messages (ms)\ncontext.lastTime = context.lastTime || 0;\n\nvar now = Date.now();\n\nif (now-context.lastTime > interval) {\n  context.lastTime = now;\n  return msg;\n} else {\n  return null;\n}",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 870,
-        "y": 660,
-        "wires": [
-            [
-                "6b378d2f0027d123"
-            ]
         ]
     },
     {
@@ -265,7 +212,7 @@
         "nodata": "",
         "dot": false,
         "ymin": "0",
-        "ymax": "10",
+        "ymax": "50",
         "removeOlder": "10",
         "removeOlderPoints": "1000",
         "removeOlderUnit": "1",
@@ -293,111 +240,187 @@
         ]
     },
     {
-        "id": "dae8234f.2517e",
-        "type": "inject",
-        "z": "b3bbfece52d338a7",
-        "name": "0.5s tick",
-        "repeat": "0.5",
-        "crontab": "",
-        "once": false,
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 1384.5999755859375,
-        "y": 277.20001220703125,
-        "wires": [
-            [
-                "56a6f8f2.a95908"
-            ]
-        ]
-    },
-    {
-        "id": "56a6f8f2.a95908",
+        "id": "64fc0ad5ddc8e756",
         "type": "function",
         "z": "b3bbfece52d338a7",
-        "name": "Toggle output on input",
-        "func": "\n// If it does exist make it the inverse of what it was or else initialise it to false\n// (context variables persist between calls to the function)\ncontext.level = !context.level || false;\n\n// set the payload to the level and return\nmsg.payload = context.level;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1632.5999755859375,
-        "y": 277.20001220703125,
-        "wires": [
-            [
-                "2db61802.d249e8"
-            ]
-        ]
-    },
-    {
-        "id": "2db61802.d249e8",
-        "type": "arduino out",
-        "z": "b3bbfece52d338a7",
-        "name": "",
-        "pin": "13",
-        "state": "OUTPUT",
-        "arduino": "d7663aaf.47194",
-        "x": 1845.0999755859375,
-        "y": 277.20001220703125,
-        "wires": []
-    },
-    {
-        "id": "4a19bd19becc5ee9",
-        "type": "inject",
-        "z": "b3bbfece52d338a7",
-        "name": "0.5s tick",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "0.5",
-        "crontab": "",
-        "once": false,
-        "onceDelay": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 500,
-        "y": 840,
-        "wires": [
-            [
-                "d4c7a75d1728eb4b"
-            ]
-        ]
-    },
-    {
-        "id": "a9b049db4bd0e8bc",
-        "type": "arduino out",
-        "z": "b3bbfece52d338a7",
-        "name": "",
-        "pin": "13",
-        "state": "OUTPUT",
-        "arduino": "a34c3b913af2ab9e",
-        "x": 1020,
-        "y": 840,
-        "wires": []
-    },
-    {
-        "id": "d4c7a75d1728eb4b",
-        "type": "function",
-        "z": "b3bbfece52d338a7",
-        "name": "Toggle output on input",
-        "func": "\n// If it does exist make it the inverse of what it was or else initialise it to false\n// (context variables persist between calls to the function)\ncontext.level = !context.level || false;\n\n// set the payload to the level and return\nmsg.payload = context.level;\nreturn msg;",
+        "name": "STATE filter",
+        "func": "if (msg.topic == \"STATE\")\n    return msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 708,
-        "y": 840,
+        "x": 650,
+        "y": 740,
         "wires": [
             [
-                "a9b049db4bd0e8bc"
+                "9a5d6aaf55d522a2"
             ]
         ]
+    },
+    {
+        "id": "9a5d6aaf55d522a2",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "e24b02054ab5a352",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "State",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1050,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "412242f0f35caef7",
+        "type": "inject",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Request\\n",
+        "payloadType": "str",
+        "x": 840,
+        "y": 1100,
+        "wires": [
+            [
+                "b19ff47dc849409d"
+            ]
+        ]
+    },
+    {
+        "id": "897e798235cf538a",
+        "type": "ui_dropdown",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set State",
+        "tooltip": "",
+        "place": "",
+        "group": "e24b02054ab5a352",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Buck",
+                "value": "tooBuck\\n",
+                "type": "str"
+            },
+            {
+                "label": "Boost",
+                "value": "toBoost\\n",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "selection",
+        "topicType": "str",
+        "className": "",
+        "x": 480,
+        "y": 880,
+        "wires": [
+            [
+                "2c74dcae8a886907"
+            ]
+        ]
+    },
+    {
+        "id": "dc81ee852a66ecbc",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "SETPOINT filter",
+        "func": "if (msg.topic == \"SETPOINT\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 800,
+        "wires": [
+            [
+                "47f50af5246f85a6"
+            ]
+        ]
+    },
+    {
+        "id": "47f50af5246f85a6",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "e24b02054ab5a352",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "setpoint (V)",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1070,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "2c74dcae8a886907",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 880,
+        "wires": [
+            [
+                "b19ff47dc849409d"
+            ]
+        ]
+    },
+    {
+        "id": "177e6527f4734a4f",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 1020,
+        "wires": [
+            [
+                "b19ff47dc849409d"
+            ]
+        ]
+    },
+    {
+        "id": "b19ff47dc849409d",
+        "type": "serial out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "serial": "608c62d3cab3ed67",
+        "x": 1020,
+        "y": 960,
+        "wires": []
     },
     {
         "id": "c89043811b4c39fe",
@@ -414,9 +437,587 @@
         ]
     },
     {
+        "id": "f9428a81a06d3be2",
+        "type": "debug",
+        "z": "b3bbfece52d338a7",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1080,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "506b89f96a72444d",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Payload Parsing",
+        "func": "\nconst fromArduino = msg.payload.split(\" \");\n\nmsg.topic = fromArduino[0];\n\n\n\n//msg.payload = fromArduino;\nif(Number.isInteger(parseInt(fromArduino[1])))\n{\n    msg.payload = parseFloat(fromArduino[1]/1000);\n}\nelse{\n    msg.payload = fromArduino[1];\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1580,
+        "y": 500,
+        "wires": [
+            [
+                "3b0678c6f893fd74",
+                "f2be8b673704a340",
+                "508463992566b7c6",
+                "30b532fdaa36812b",
+                "8324ea0c9a10622a"
+            ]
+        ]
+    },
+    {
+        "id": "3b0678c6f893fd74",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VH filter",
+        "func": "if (msg.topic == \"VH\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1840,
+        "y": 500,
+        "wires": [
+            [
+                "2c90205aa2d1d7a9"
+            ]
+        ]
+    },
+    {
+        "id": "f2be8b673704a340",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "PWM filter",
+        "func": "if (msg.topic == \"PWM\")\n{\n    msg.payload = msg.payload * 1000;\n    return msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1850,
+        "y": 580,
+        "wires": [
+            [
+                "4c09157d431bbe03"
+            ]
+        ]
+    },
+    {
+        "id": "508463992566b7c6",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VL filter",
+        "func": "if (msg.topic == \"VL\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1840,
+        "y": 660,
+        "wires": [
+            [
+                "89c73eac8d56a5ce"
+            ]
+        ]
+    },
+    {
+        "id": "4c09157d431bbe03",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "label": "PWM",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1024",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2250,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89c73eac8d56a5ce",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "Low Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2300,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c90205aa2d1d7a9",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "label": "High Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2300,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30b532fdaa36812b",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "STATE filter",
+        "func": "if (msg.topic == \"STATE\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1850,
+        "y": 740,
+        "wires": [
+            [
+                "f85544a31c5985a4"
+            ]
+        ]
+    },
+    {
+        "id": "f85544a31c5985a4",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "2c075b6bda96c5ca",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "State",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 2250,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "1c23a4ee03ad913b",
+        "type": "inject",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Request\\n",
+        "payloadType": "str",
+        "x": 2040,
+        "y": 1100,
+        "wires": [
+            [
+                "91bdad3422b0755b"
+            ]
+        ]
+    },
+    {
+        "id": "a43048a9a441b0d1",
+        "type": "ui_dropdown",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set State",
+        "tooltip": "",
+        "place": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Buck",
+                "value": "tooBuck\\n",
+                "type": "str"
+            },
+            {
+                "label": "Boost",
+                "value": "toBoost\\n",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "selection",
+        "topicType": "str",
+        "className": "",
+        "x": 1680,
+        "y": 880,
+        "wires": [
+            [
+                "f104bb39e52a4a18"
+            ]
+        ]
+    },
+    {
+        "id": "8324ea0c9a10622a",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "SETPOINT filter",
+        "func": "if (msg.topic == \"SETPOINT\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 800,
+        "wires": [
+            [
+                "5881d80b411eb2e0"
+            ]
+        ]
+    },
+    {
+        "id": "5881d80b411eb2e0",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "2c075b6bda96c5ca",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "setpoint (V)",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 2270,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "1850b1ec90c8125c",
+        "type": "debug",
+        "z": "b3bbfece52d338a7",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1520,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "f104bb39e52a4a18",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 880,
+        "wires": [
+            [
+                "91bdad3422b0755b"
+            ]
+        ]
+    },
+    {
+        "id": "81a608b69dbc9bb1",
+        "type": "string",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "methods": [
+            {
+                "name": "toString",
+                "params": []
+            },
+            {
+                "name": "append",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\\n"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 1690,
+        "y": 1020,
+        "wires": [
+            [
+                "2802e59190df0a9c"
+            ]
+        ]
+    },
+    {
+        "id": "2802e59190df0a9c",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1860,
+        "y": 1020,
+        "wires": [
+            [
+                "91bdad3422b0755b"
+            ]
+        ]
+    },
+    {
+        "id": "a4ef6d191eef9a81",
+        "type": "debug",
+        "z": "b3bbfece52d338a7",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 2280,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "91bdad3422b0755b",
+        "type": "serial out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "serial": "ad9ac7865bc71632",
+        "x": 2220,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "b311d1ed8b2de03c",
+        "type": "serial in",
+        "z": "b3bbfece52d338a7",
+        "name": "ATverter 2",
+        "serial": "ad9ac7865bc71632",
+        "x": 1380,
+        "y": 500,
+        "wires": [
+            [
+                "506b89f96a72444d",
+                "1850b1ec90c8125c"
+            ]
+        ]
+    },
+    {
+        "id": "6ee8f8d2e089d5d8",
+        "type": "ui_numeric",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set Output (mV)",
+        "tooltip": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": "1000",
+        "max": "39000",
+        "step": "1000",
+        "className": "",
+        "x": 1340,
+        "y": 1020,
+        "wires": [
+            [
+                "81a608b69dbc9bb1"
+            ]
+        ]
+    },
+    {
+        "id": "05c6db7f99dad362",
+        "type": "string",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "methods": [
+            {
+                "name": "toString",
+                "params": []
+            },
+            {
+                "name": "append",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\\n"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 477,
+        "y": 1017.6000366210938,
+        "wires": [
+            [
+                "177e6527f4734a4f"
+            ]
+        ]
+    },
+    {
+        "id": "5815bac40962ba42",
+        "type": "ui_numeric",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set Output (mV)",
+        "tooltip": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": "1000",
+        "max": "39000",
+        "step": "1000",
+        "className": "",
+        "x": 320,
+        "y": 1020,
+        "wires": [
+            [
+                "05c6db7f99dad362"
+            ]
+        ]
+    },
+    {
         "id": "e24b02054ab5a352",
         "type": "ui_group",
-        "name": "ATverter 1",
+        "name": "ATverter",
         "tab": "bc62c28c4de73e00",
         "order": 1,
         "disp": true,
@@ -425,19 +1026,39 @@
         "className": ""
     },
     {
-        "id": "d7663aaf.47194",
-        "type": "arduino-board",
-        "device": ""
-    },
-    {
-        "id": "a34c3b913af2ab9e",
-        "type": "arduino-board",
-        "device": ""
-    },
-    {
         "id": "608c62d3cab3ed67",
         "type": "serial-port",
         "serialport": "COM15",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "2c075b6bda96c5ca",
+        "type": "ui_group",
+        "name": "Atverter2",
+        "tab": "bc62c28c4de73e00",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ad9ac7865bc71632",
+        "type": "serial-port",
+        "serialport": "COM13",
         "serialbaud": "9600",
         "databits": "8",
         "parity": "none",
