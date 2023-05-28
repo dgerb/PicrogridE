@@ -8,11 +8,25 @@
         "env": []
     },
     {
+        "id": "5331bb12.a5ac24",
+        "type": "tab",
+        "label": "Flow 3",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "949f8f0b.827c38",
+        "type": "tab",
+        "label": "Delay",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "1639bec68c5b5dab",
         "type": "junction",
         "z": "b3bbfece52d338a7",
-        "x": 1360,
-        "y": 1000,
+        "x": 1860,
+        "y": 1220,
         "wires": [
             []
         ]
@@ -21,11 +35,249 @@
         "id": "e373b72764c890e4",
         "type": "junction",
         "z": "b3bbfece52d338a7",
-        "x": 2560,
-        "y": 1000,
+        "x": 2680,
+        "y": 1220,
         "wires": [
             []
         ]
+    },
+    {
+        "id": "d090c124aaeba77a",
+        "type": "junction",
+        "z": "b3bbfece52d338a7",
+        "x": 340,
+        "y": 2220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7562c168ec64310",
+        "type": "junction",
+        "z": "b3bbfece52d338a7",
+        "x": 1160,
+        "y": 2220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "608c62d3cab3ed67",
+        "type": "serial-port",
+        "serialport": "COM15",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "c3bb530360f37c53",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-custom",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#4B7930",
+                    "value": "#4B7930",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#4B7930",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#6db046",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#555555",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#eeeeee",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#4b7930",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#333333",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "9f5607c972f77eb8",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "7",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b29d041cc8a8e81c",
+        "type": "serial-port",
+        "serialport": "COM14",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "bc62c28c4de73e00",
+        "type": "ui_tab",
+        "name": "ATverter Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e24b02054ab5a352",
+        "type": "ui_group",
+        "name": "ATverter",
+        "tab": "bc62c28c4de73e00",
+        "order": 1,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d7663aaf.47194",
+        "type": "arduino-board",
+        "device": ""
+    },
+    {
+        "id": "a34c3b913af2ab9e",
+        "type": "arduino-board",
+        "device": ""
+    },
+    {
+        "id": "2c075b6bda96c5ca",
+        "type": "ui_group",
+        "name": "Atverter2",
+        "tab": "bc62c28c4de73e00",
+        "order": 2,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ad9ac7865bc71632",
+        "type": "serial-port",
+        "serialport": "COM13",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "2b3416c51c484bd4",
+        "type": "ui_group",
+        "name": "Atverter3",
+        "tab": "bc62c28c4de73e00",
+        "order": 3,
+        "disp": true,
+        "width": 12,
+        "collapse": false,
+        "className": ""
     },
     {
         "id": "146e76c8ccc8d505",
@@ -46,7 +298,9 @@
                 "84a458ac2e77fba0",
                 "78697f4acc48e191",
                 "64fc0ad5ddc8e756",
-                "dc81ee852a66ecbc"
+                "dc81ee852a66ecbc",
+                "72021a0a609ca54b",
+                "6dc1d947ba8d7748"
             ]
         ]
     },
@@ -113,9 +367,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "e24b02054ab5a352",
-        "order": 3,
-        "width": 0,
-        "height": 0,
+        "order": 9,
+        "width": 12,
+        "height": 5,
         "label": "PWM",
         "chartType": "line",
         "legend": "true",
@@ -157,9 +411,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "e24b02054ab5a352",
-        "order": 2,
-        "width": 0,
-        "height": 0,
+        "order": 5,
+        "width": 6,
+        "height": 4,
         "label": "Low Side Voltage (V)",
         "chartType": "line",
         "legend": "true",
@@ -201,9 +455,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "e24b02054ab5a352",
-        "order": 2,
-        "width": 0,
-        "height": 0,
+        "order": 6,
+        "width": 6,
+        "height": 4,
         "label": "High Side Voltage (V)",
         "chartType": "line",
         "legend": "true",
@@ -263,9 +517,9 @@
         "type": "ui_text",
         "z": "b3bbfece52d338a7",
         "group": "e24b02054ab5a352",
-        "order": 4,
-        "width": 0,
-        "height": 0,
+        "order": 2,
+        "width": 6,
+        "height": 1,
         "name": "",
         "label": "State",
         "format": "{{msg.payload}}",
@@ -292,8 +546,8 @@
         "topic": "",
         "payload": "Request\\n",
         "payloadType": "str",
-        "x": 840,
-        "y": 1100,
+        "x": 600,
+        "y": 1220,
         "wires": [
             [
                 "b19ff47dc849409d"
@@ -309,9 +563,9 @@
         "tooltip": "",
         "place": "",
         "group": "e24b02054ab5a352",
-        "order": 4,
-        "width": 0,
-        "height": 0,
+        "order": 1,
+        "width": 6,
+        "height": 1,
         "passthru": true,
         "multiple": false,
         "options": [
@@ -324,14 +578,19 @@
                 "label": "Boost",
                 "value": "toBoost\\n",
                 "type": "str"
+            },
+            {
+                "label": "Current Limiter",
+                "value": "toCurrent",
+                "type": "str"
             }
         ],
         "payload": "",
         "topic": "selection",
         "topicType": "str",
         "className": "",
-        "x": 480,
-        "y": 880,
+        "x": 240,
+        "y": 1000,
         "wires": [
             [
                 "2c74dcae8a886907"
@@ -363,8 +622,8 @@
         "z": "b3bbfece52d338a7",
         "group": "e24b02054ab5a352",
         "order": 4,
-        "width": 0,
-        "height": 0,
+        "width": 6,
+        "height": 1,
         "name": "",
         "label": "setpoint (V)",
         "format": "{{msg.payload}}",
@@ -385,8 +644,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 880,
+        "x": 420,
+        "y": 1000,
         "wires": [
             [
                 "b19ff47dc849409d"
@@ -404,35 +663,11 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 660,
-        "y": 1020,
+        "x": 420,
+        "y": 1140,
         "wires": [
             [
                 "b19ff47dc849409d"
-            ]
-        ]
-    },
-    {
-        "id": "b19ff47dc849409d",
-        "type": "serial out",
-        "z": "b3bbfece52d338a7",
-        "name": "",
-        "serial": "608c62d3cab3ed67",
-        "x": 1020,
-        "y": 960,
-        "wires": []
-    },
-    {
-        "id": "c89043811b4c39fe",
-        "type": "serial in",
-        "z": "b3bbfece52d338a7",
-        "name": "ATverter 1",
-        "serial": "608c62d3cab3ed67",
-        "x": 180,
-        "y": 500,
-        "wires": [
-            [
-                "146e76c8ccc8d505"
             ]
         ]
     },
@@ -448,8 +683,8 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1080,
-        "y": 1120,
+        "x": 840,
+        "y": 1240,
         "wires": []
     },
     {
@@ -463,7 +698,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1580,
+        "x": 1960,
         "y": 500,
         "wires": [
             [
@@ -471,7 +706,9 @@
                 "f2be8b673704a340",
                 "508463992566b7c6",
                 "30b532fdaa36812b",
-                "8324ea0c9a10622a"
+                "8324ea0c9a10622a",
+                "0966a42b5705d269",
+                "f92df54688b37ed7"
             ]
         ]
     },
@@ -486,7 +723,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1840,
+        "x": 2220,
         "y": 500,
         "wires": [
             [
@@ -505,7 +742,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1850,
+        "x": 2230,
         "y": 580,
         "wires": [
             [
@@ -524,7 +761,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1840,
+        "x": 2220,
         "y": 660,
         "wires": [
             [
@@ -538,9 +775,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "2c075b6bda96c5ca",
-        "order": 3,
-        "width": 0,
-        "height": 0,
+        "order": 9,
+        "width": 12,
+        "height": 5,
         "label": "PWM",
         "chartType": "line",
         "legend": "true",
@@ -570,7 +807,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 2250,
+        "x": 2630,
         "y": 580,
         "wires": [
             []
@@ -582,9 +819,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "2c075b6bda96c5ca",
-        "order": 2,
-        "width": 0,
-        "height": 0,
+        "order": 5,
+        "width": 6,
+        "height": 4,
         "label": "Low Side Voltage (V)",
         "chartType": "line",
         "legend": "true",
@@ -614,7 +851,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 2300,
+        "x": 2680,
         "y": 660,
         "wires": [
             []
@@ -626,9 +863,9 @@
         "z": "b3bbfece52d338a7",
         "name": "",
         "group": "2c075b6bda96c5ca",
-        "order": 2,
-        "width": 0,
-        "height": 0,
+        "order": 6,
+        "width": 6,
+        "height": 4,
         "label": "High Side Voltage (V)",
         "chartType": "line",
         "legend": "true",
@@ -658,7 +895,7 @@
         "outputs": 1,
         "useDifferentColor": false,
         "className": "",
-        "x": 2300,
+        "x": 2680,
         "y": 500,
         "wires": [
             []
@@ -675,7 +912,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1850,
+        "x": 2230,
         "y": 740,
         "wires": [
             [
@@ -688,15 +925,15 @@
         "type": "ui_text",
         "z": "b3bbfece52d338a7",
         "group": "2c075b6bda96c5ca",
-        "order": 4,
-        "width": 0,
-        "height": 0,
+        "order": 1,
+        "width": 6,
+        "height": 1,
         "name": "",
         "label": "State",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 2250,
+        "x": 2630,
         "y": 740,
         "wires": []
     },
@@ -717,49 +954,11 @@
         "topic": "",
         "payload": "Request\\n",
         "payloadType": "str",
-        "x": 2040,
-        "y": 1100,
+        "x": 2540,
+        "y": 1320,
         "wires": [
             [
                 "91bdad3422b0755b"
-            ]
-        ]
-    },
-    {
-        "id": "a43048a9a441b0d1",
-        "type": "ui_dropdown",
-        "z": "b3bbfece52d338a7",
-        "name": "",
-        "label": "Set State",
-        "tooltip": "",
-        "place": "",
-        "group": "2c075b6bda96c5ca",
-        "order": 4,
-        "width": 0,
-        "height": 0,
-        "passthru": true,
-        "multiple": false,
-        "options": [
-            {
-                "label": "Buck",
-                "value": "tooBuck\\n",
-                "type": "str"
-            },
-            {
-                "label": "Boost",
-                "value": "toBoost\\n",
-                "type": "str"
-            }
-        ],
-        "payload": "",
-        "topic": "selection",
-        "topicType": "str",
-        "className": "",
-        "x": 1680,
-        "y": 880,
-        "wires": [
-            [
-                "f104bb39e52a4a18"
             ]
         ]
     },
@@ -774,7 +973,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1860,
+        "x": 2240,
         "y": 800,
         "wires": [
             [
@@ -788,14 +987,14 @@
         "z": "b3bbfece52d338a7",
         "group": "2c075b6bda96c5ca",
         "order": 4,
-        "width": 0,
-        "height": 0,
+        "width": 6,
+        "height": 1,
         "name": "",
         "label": "setpoint (V)",
         "format": "{{msg.payload}}",
         "layout": "row-spread",
         "className": "",
-        "x": 2270,
+        "x": 2650,
         "y": 800,
         "wires": []
     },
@@ -811,7 +1010,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1520,
+        "x": 1900,
         "y": 640,
         "wires": []
     },
@@ -826,8 +1025,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1860,
-        "y": 880,
+        "x": 2360,
+        "y": 1100,
         "wires": [
             [
                 "91bdad3422b0755b"
@@ -858,8 +1057,8 @@
         "propout": "payload",
         "object": "msg",
         "objectout": "msg",
-        "x": 1690,
-        "y": 1020,
+        "x": 2190,
+        "y": 1240,
         "wires": [
             [
                 "2802e59190df0a9c"
@@ -877,8 +1076,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1860,
-        "y": 1020,
+        "x": 2360,
+        "y": 1240,
         "wires": [
             [
                 "91bdad3422b0755b"
@@ -886,29 +1085,13 @@
         ]
     },
     {
-        "id": "a4ef6d191eef9a81",
-        "type": "debug",
-        "z": "b3bbfece52d338a7",
-        "name": "debug 6",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 2280,
-        "y": 1120,
-        "wires": []
-    },
-    {
         "id": "91bdad3422b0755b",
         "type": "serial out",
         "z": "b3bbfece52d338a7",
         "name": "",
         "serial": "ad9ac7865bc71632",
-        "x": 2220,
-        "y": 960,
+        "x": 2720,
+        "y": 1180,
         "wires": []
     },
     {
@@ -917,7 +1100,7 @@
         "z": "b3bbfece52d338a7",
         "name": "ATverter 2",
         "serial": "ad9ac7865bc71632",
-        "x": 1380,
+        "x": 1760,
         "y": 500,
         "wires": [
             [
@@ -934,9 +1117,9 @@
         "label": "Set Output (mV)",
         "tooltip": "",
         "group": "2c075b6bda96c5ca",
-        "order": 7,
-        "width": 0,
-        "height": 0,
+        "order": 3,
+        "width": 6,
+        "height": 1,
         "wrap": false,
         "passthru": true,
         "topic": "topic",
@@ -946,8 +1129,8 @@
         "max": "39000",
         "step": "1000",
         "className": "",
-        "x": 1340,
-        "y": 1020,
+        "x": 1840,
+        "y": 1240,
         "wires": [
             [
                 "81a608b69dbc9bb1"
@@ -978,8 +1161,8 @@
         "propout": "payload",
         "object": "msg",
         "objectout": "msg",
-        "x": 477,
-        "y": 1017.6000366210938,
+        "x": 237,
+        "y": 1137.6000366210938,
         "wires": [
             [
                 "177e6527f4734a4f"
@@ -991,12 +1174,781 @@
         "type": "ui_numeric",
         "z": "b3bbfece52d338a7",
         "name": "",
-        "label": "Set Output (mV)",
+        "label": "Set Output (mV/mA)",
         "tooltip": "",
+        "group": "e24b02054ab5a352",
+        "order": 3,
+        "width": 6,
+        "height": 1,
+        "wrap": false,
+        "passthru": true,
+        "topic": "topic",
+        "topicType": "msg",
+        "format": "{{value}}",
+        "min": "1000",
+        "max": "39000",
+        "step": "1000",
+        "className": "",
+        "x": 100,
+        "y": 1060,
+        "wires": [
+            [
+                "05c6db7f99dad362"
+            ]
+        ]
+    },
+    {
+        "id": "72021a0a609ca54b",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "hvCurrent filter",
+        "func": "if (msg.topic == \"hvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 860,
+        "wires": [
+            [
+                "11fc2d504f4cc9c0"
+            ]
+        ]
+    },
+    {
+        "id": "6dc1d947ba8d7748",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "lvCurrent filter",
+        "func": "if (msg.topic == \"lvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 920,
+        "wires": [
+            [
+                "c2a417d908635a35"
+            ]
+        ]
+    },
+    {
+        "id": "11fc2d504f4cc9c0",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "e24b02054ab5a352",
+        "order": 8,
+        "width": 6,
+        "height": 4,
+        "label": "High Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c2a417d908635a35",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "e24b02054ab5a352",
+        "order": 7,
+        "width": 6,
+        "height": 4,
+        "label": "Low Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b19ff47dc849409d",
+        "type": "serial out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "serial": "608c62d3cab3ed67",
+        "x": 780,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "c89043811b4c39fe",
+        "type": "serial in",
+        "z": "b3bbfece52d338a7",
+        "name": "ATverter 1",
+        "serial": "608c62d3cab3ed67",
+        "x": 180,
+        "y": 500,
+        "wires": [
+            [
+                "146e76c8ccc8d505"
+            ]
+        ]
+    },
+    {
+        "id": "0966a42b5705d269",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "hvCurrent filter",
+        "func": "if (msg.topic == \"hvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2240,
+        "y": 860,
+        "wires": [
+            [
+                "2e935d08de6d8213"
+            ]
+        ]
+    },
+    {
+        "id": "f92df54688b37ed7",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "lvCurrent filter",
+        "func": "if (msg.topic == \"lvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 2240,
+        "y": 920,
+        "wires": [
+            [
+                "d4c78e9d5fcfdd39"
+            ]
+        ]
+    },
+    {
+        "id": "2e935d08de6d8213",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 8,
+        "width": 6,
+        "height": 4,
+        "label": "High Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2680,
+        "y": 860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d4c78e9d5fcfdd39",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
         "group": "2c075b6bda96c5ca",
         "order": 7,
-        "width": 0,
-        "height": 0,
+        "width": 6,
+        "height": 4,
+        "label": "Low Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 2680,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0e7ceb8e68f099c",
+        "type": "ui_dropdown",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set State",
+        "tooltip": "",
+        "place": "",
+        "group": "2c075b6bda96c5ca",
+        "order": 2,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Buck",
+                "value": "tooBuck\\n",
+                "type": "str"
+            },
+            {
+                "label": "Boost",
+                "value": "toBoost\\n",
+                "type": "str"
+            },
+            {
+                "label": "Current Limiter",
+                "value": "toCurrent",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "selection",
+        "topicType": "str",
+        "className": "",
+        "x": 2120,
+        "y": 1100,
+        "wires": [
+            [
+                "f104bb39e52a4a18"
+            ]
+        ]
+    },
+    {
+        "id": "3f7aa6f6bb092f12",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "Payload Parsing",
+        "func": "\nconst fromArduino = msg.payload.split(\" \");\n\nmsg.topic = fromArduino[0];\n\n\n\n//msg.payload = fromArduino;\nif(Number.isInteger(parseInt(fromArduino[1])))\n{\n    msg.payload = parseFloat(fromArduino[1]/1000);\n}\nelse{\n    msg.payload = fromArduino[1];\n}\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 1500,
+        "wires": [
+            [
+                "3255ed9d37304178",
+                "6bf1a8bd6a878bce",
+                "66f99bba5cd10238",
+                "9a5b2289d36051c5",
+                "aceb54710ed9cd26",
+                "8d3e8f73ca285329",
+                "7937671a804176d9"
+            ]
+        ]
+    },
+    {
+        "id": "3255ed9d37304178",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VH filter",
+        "func": "if (msg.topic == \"VH\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 1500,
+        "wires": [
+            [
+                "f5cc6bc3cb1b3203"
+            ]
+        ]
+    },
+    {
+        "id": "6bf1a8bd6a878bce",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "PWM filter",
+        "func": "if (msg.topic == \"PWM\")\n{\n    msg.payload = msg.payload * 1000;\n    return msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1580,
+        "wires": [
+            [
+                "8eebc665644a21f1"
+            ]
+        ]
+    },
+    {
+        "id": "66f99bba5cd10238",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "VL filter",
+        "func": "if (msg.topic == \"VL\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 700,
+        "y": 1660,
+        "wires": [
+            [
+                "8e553dea4d258f8e"
+            ]
+        ]
+    },
+    {
+        "id": "8eebc665644a21f1",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2b3416c51c484bd4",
+        "order": 9,
+        "width": 12,
+        "height": 5,
+        "label": "PWM",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1024",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1110,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e553dea4d258f8e",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2b3416c51c484bd4",
+        "order": 5,
+        "width": 6,
+        "height": 4,
+        "label": "Low Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1160,
+        "y": 1660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f5cc6bc3cb1b3203",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2b3416c51c484bd4",
+        "order": 6,
+        "width": 6,
+        "height": 4,
+        "label": "High Side Voltage (V)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "50",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1160,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a5b2289d36051c5",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "STATE filter",
+        "func": "if (msg.topic == \"STATE\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 1740,
+        "wires": [
+            [
+                "cd06844f5c8d57d1"
+            ]
+        ]
+    },
+    {
+        "id": "cd06844f5c8d57d1",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "2b3416c51c484bd4",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "State",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1110,
+        "y": 1740,
+        "wires": []
+    },
+    {
+        "id": "61b0c8553af4ba04",
+        "type": "inject",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "Request\\n",
+        "payloadType": "str",
+        "x": 1020,
+        "y": 2320,
+        "wires": [
+            [
+                "c4d65aed47688bf7"
+            ]
+        ]
+    },
+    {
+        "id": "aceb54710ed9cd26",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "SETPOINT filter",
+        "func": "if (msg.topic == \"SETPOINT\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1800,
+        "wires": [
+            [
+                "67b3168fbbc1ee91"
+            ]
+        ]
+    },
+    {
+        "id": "67b3168fbbc1ee91",
+        "type": "ui_text",
+        "z": "b3bbfece52d338a7",
+        "group": "2b3416c51c484bd4",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "setpoint (V)",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 1130,
+        "y": 1800,
+        "wires": []
+    },
+    {
+        "id": "f4323aac47b6b7ee",
+        "type": "debug",
+        "z": "b3bbfece52d338a7",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 1640,
+        "wires": []
+    },
+    {
+        "id": "16fb423ebdf34eab",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 2100,
+        "wires": [
+            [
+                "c4d65aed47688bf7"
+            ]
+        ]
+    },
+    {
+        "id": "70de8ce8199f2230",
+        "type": "string",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "methods": [
+            {
+                "name": "toString",
+                "params": []
+            },
+            {
+                "name": "append",
+                "params": [
+                    {
+                        "type": "str",
+                        "value": "\\n"
+                    }
+                ]
+            }
+        ],
+        "prop": "payload",
+        "propout": "payload",
+        "object": "msg",
+        "objectout": "msg",
+        "x": 670,
+        "y": 2240,
+        "wires": [
+            [
+                "128e8e68a0b0dfa0"
+            ]
+        ]
+    },
+    {
+        "id": "128e8e68a0b0dfa0",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "repeat 50 times",
+        "func": "\nfor(let i = 0; i < 50; i++)\n{\n    node.send(msg);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 840,
+        "y": 2240,
+        "wires": [
+            [
+                "c4d65aed47688bf7"
+            ]
+        ]
+    },
+    {
+        "id": "c4d65aed47688bf7",
+        "type": "serial out",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "serial": "ad9ac7865bc71632",
+        "x": 1200,
+        "y": 2180,
+        "wires": []
+    },
+    {
+        "id": "24565cbbccb2ee24",
+        "type": "serial in",
+        "z": "b3bbfece52d338a7",
+        "name": "ATverter 3",
+        "serial": "ad9ac7865bc71632",
+        "x": 240,
+        "y": 1500,
+        "wires": [
+            [
+                "3f7aa6f6bb092f12",
+                "f4323aac47b6b7ee"
+            ]
+        ]
+    },
+    {
+        "id": "f1a48c963c8d190a",
+        "type": "ui_numeric",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set Output (mV)",
+        "tooltip": "",
+        "group": "2b3416c51c484bd4",
+        "order": 3,
+        "width": 6,
+        "height": 1,
         "wrap": false,
         "passthru": true,
         "topic": "topic",
@@ -1007,79 +1959,266 @@
         "step": "1000",
         "className": "",
         "x": 320,
-        "y": 1020,
+        "y": 2240,
         "wires": [
             [
-                "05c6db7f99dad362"
+                "70de8ce8199f2230"
             ]
         ]
     },
     {
-        "id": "e24b02054ab5a352",
-        "type": "ui_group",
-        "name": "ATverter",
-        "tab": "bc62c28c4de73e00",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
+        "id": "8d3e8f73ca285329",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "hvCurrent filter",
+        "func": "if (msg.topic == \"hvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1860,
+        "wires": [
+            [
+                "e2dba171708549ee"
+            ]
+        ]
     },
     {
-        "id": "608c62d3cab3ed67",
-        "type": "serial-port",
-        "serialport": "COM15",
-        "serialbaud": "9600",
-        "databits": "8",
-        "parity": "none",
-        "stopbits": "1",
-        "waitfor": "",
-        "dtr": "none",
-        "rts": "none",
-        "cts": "none",
-        "dsr": "none",
-        "newline": "\\n",
-        "bin": "false",
-        "out": "char",
-        "addchar": "",
-        "responsetimeout": "10000"
+        "id": "7937671a804176d9",
+        "type": "function",
+        "z": "b3bbfece52d338a7",
+        "name": "lvCurrent filter",
+        "func": "if (msg.topic == \"lvCurrent\")\n    return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 720,
+        "y": 1920,
+        "wires": [
+            [
+                "c0d56d46b5716fa9"
+            ]
+        ]
     },
     {
-        "id": "2c075b6bda96c5ca",
-        "type": "ui_group",
-        "name": "Atverter2",
-        "tab": "bc62c28c4de73e00",
+        "id": "e2dba171708549ee",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2b3416c51c484bd4",
+        "order": 8,
+        "width": 6,
+        "height": 4,
+        "label": "High Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1160,
+        "y": 1860,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c0d56d46b5716fa9",
+        "type": "ui_chart",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "group": "2b3416c51c484bd4",
+        "order": 7,
+        "width": 6,
+        "height": 4,
+        "label": "Low Side Current (A)",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "-3",
+        "ymax": "3",
+        "removeOlder": "10",
+        "removeOlderPoints": "1000",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1160,
+        "y": 1920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9d2204af576ab02e",
+        "type": "ui_dropdown",
+        "z": "b3bbfece52d338a7",
+        "name": "",
+        "label": "Set State",
+        "tooltip": "",
+        "place": "",
+        "group": "2b3416c51c484bd4",
         "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false,
-        "className": ""
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Buck",
+                "value": "tooBuck\\n",
+                "type": "str"
+            },
+            {
+                "label": "Boost",
+                "value": "toBoost\\n",
+                "type": "str"
+            },
+            {
+                "label": "Current Limiter",
+                "value": "toCurrent",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "selection",
+        "topicType": "str",
+        "className": "",
+        "x": 600,
+        "y": 2100,
+        "wires": [
+            [
+                "16fb423ebdf34eab"
+            ]
+        ]
     },
     {
-        "id": "ad9ac7865bc71632",
-        "type": "serial-port",
-        "serialport": "COM13",
-        "serialbaud": "9600",
-        "databits": "8",
-        "parity": "none",
-        "stopbits": "1",
-        "waitfor": "",
-        "dtr": "none",
-        "rts": "none",
-        "cts": "none",
-        "dsr": "none",
-        "newline": "\\n",
-        "bin": "false",
-        "out": "char",
-        "addchar": "",
-        "responsetimeout": "10000"
+        "id": "fdff5d7d.9e8ce8",
+        "type": "inject",
+        "z": "5331bb12.a5ac24",
+        "name": "Number of loops",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "4",
+        "payloadType": "num",
+        "x": 270,
+        "y": 140,
+        "wires": [
+            [
+                "45f326c3.1fde28"
+            ]
+        ]
     },
     {
-        "id": "bc62c28c4de73e00",
-        "type": "ui_tab",
-        "name": "ATverter Dashboard",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
+        "id": "45f326c3.1fde28",
+        "type": "function",
+        "z": "5331bb12.a5ac24",
+        "name": "",
+        "func": "let loops = context.get(\"loops\") || 1;\nif (msg.topic !== \"running\"){\n    context.set(\"loops\", msg.payload - 1);\n    msg.topic = \"running\";\n    return [msg, msg]\n} else if (loops !== 1) {\n    msg.payload = loops;\n    context.set(\"loops\", loops - 1);\n    return [msg, msg];\n} else {\n    msg.payload = loops;\n    return [msg, null];\n}\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 480,
+        "y": 140,
+        "wires": [
+            [
+                "cbc26d74.e76d08"
+            ],
+            [
+                "63da4291.62cc44"
+            ]
+        ]
+    },
+    {
+        "id": "63da4291.62cc44",
+        "type": "delay",
+        "z": "5331bb12.a5ac24",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "45f326c3.1fde28"
+            ]
+        ]
+    },
+    {
+        "id": "cbc26d74.e76d08",
+        "type": "debug",
+        "z": "5331bb12.a5ac24",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 140,
+        "wires": []
     }
 ]
