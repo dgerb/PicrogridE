@@ -8,30 +8,30 @@
 #include <AtverterE.h>
 
 #define INTERRUPT_TIME 1
-/*
+
 #define INPUT_VOLTAGE_JUMP 999
 #define OUTPUT_BOOST_VOLTAGE_STEADY_STATE 499
 #define OUTPUT_VOLTAGE_STEADY_STATE 99
 #define WINDOW_SIZE 50
-*/
+
 
 AtverterE atverterE;
 
 int ledState = HIGH;
 
-uint32_t dutyCycle = 512;
-int32_t lowVoltage;
-int32_t highVoltage;
-int32_t actualLowVoltage;
-int32_t actualHighVoltage;
+double dutyCycle = 512;
+double lowVoltage;
+double highVoltage;
+double actualLowVoltage;
+double actualHighVoltage;
 
-/*
+
 int INDEX = 0;
 uint32_t VALUE = 0;
 uint32_t SUM = 0;
 uint32_t READINGS[WINDOW_SIZE];
 uint32_t AVERAGED = 0;
-*/
+
 
 //double integralControl = 0.0;
 int32_t prevVoltageError = 0;
@@ -39,7 +39,7 @@ int32_t prevVoltageError = 0;
 
 char message[20];
 int messagePosition = 0;
-String state = "buck";
+String state;
 double setPoint = 5000;
 
 
@@ -77,6 +77,12 @@ void controlUpdate(void) {
 
 
 void buckControl(double lowVoltage) {
+
+  if(lowVoltage < 1000)
+  {
+    lowVoltage = 1000;
+  }
+
   // Control gain variables
   //Atverter 1
   const double kp = 0.25;  // Proportional Control: kp * error
@@ -89,7 +95,7 @@ void buckControl(double lowVoltage) {
   // const double kd = 0.0;  // Derivative Control:
 
 
-  actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36;  // Atverter1
+  double actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36;  // Atverter1
   //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104; // Atverter2
 
 
@@ -97,18 +103,20 @@ void buckControl(double lowVoltage) {
 
   // Static variables used in the
   static double integralControl = 0.0;
-  //static uint32_t dutyCycle = (lowVoltage * 1024 / atverterE.getActualVL());
+  //static double dutyCycle = (lowVoltage * 1024 / atverterE.getActualVL());
 
-  int32_t voltageError = actualLowVoltage - lowVoltage;  // Instantaneous error of the desired output versus actual output voltage
+  double voltageError = actualLowVoltage - lowVoltage;  // Instantaneous error of the desired output versus actual output voltage
 
   // Allows for us to convert from voltage error to dutycycle error
-  double proportionalControl = -(kp * ((double)voltageError / (double)lowVoltage));  // Proportional control: -kp * percent error
+  double proportionalControl = -(kp * (voltageError / lowVoltage));  // Proportional control: -kp * percent error
 
-  integralControl += -(ki * ((double)voltageError / (double)lowVoltage));  // Integral control: -ki * (dutycycle) * percent error * sample_time
+  integralControl += -(ki * (voltageError / (lowVoltage)));  // Integral control: -ki * (dutycycle) * percent error * sample_time
 
-  dutyCycle += (double)dutyCycle * (proportionalControl + integralControl /* + derivativeControl*/);
-  dutyCycle = constrain(dutyCycle, 24, 1000);
-  atverterE.setDutyCycle(dutyCycle);
+  dutyCycle *= 1 + (proportionalControl + integralControl /* + derivativeControl*/);
+  dutyCycle = constrain(dutyCycle, 10, 1014);
+  
+  atverterE.setDutyCycle((int) dutyCycle);
+  
 
   /*
   //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104;  // Atverter2
@@ -153,6 +161,12 @@ void boostControl(double highVoltage) {
   //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104; // Atverter2
   actualHighVoltage = ((double)atverterE.getActualVH() * 0.92) + 20;  // Atverter2
 
+  if(highVoltage < 1000)
+  {
+    highVoltage = 1000;
+  }
+
+
   // Control gain variables
   //Atverter 1
   // const double kp = 0.65;  // Proportional Control: kp * error
@@ -172,14 +186,14 @@ void boostControl(double highVoltage) {
 
   // Allows for us to convert from voltage error to dutycycle error
   // Negative sign used since boost converter is inversely proportional to dutycycle
-  double proportionalControl = -(kp * ((double)voltageError / (double)actualHighVoltage));  // Proportional control: -kp * percent error
+  double proportionalControl = -(kp * ((double)voltageError / (double)highVoltage));  // Proportional control: -kp * percent error
 
   integralControl += -(ki * ((double)voltageError * (double)INTERRUPT_TIME / (double)actualHighVoltage));  // Integral control: -ki * (dutycycle) * percent error * sample_time
 
-  double derivativeControl = -(kd * ((double)(voltageError - prevVoltageError) / (double)INTERRUPT_TIME));  // Derivative control: -kd * (error - prev_error) / sample_time
-  prevVoltageError = voltageError;
+  //double derivativeControl = -(kd * ((double)(voltageError - prevVoltageError) / (double)INTERRUPT_TIME));  // Derivative control: -kd * (error - prev_error) / sample_time
+  //prevVoltageError = voltageError;
 
-  dutyCycle += (double)dutyCycle * (proportionalControl + integralControl + derivativeControl);
+  dutyCycle *=  1 + (proportionalControl + integralControl);
   //dutyCycle = constrain(dutyCycle, 10, 1014);
   atverterE.setDutyCycle(constrain(dutyCycle, 10, 1014));
 
@@ -259,9 +273,14 @@ void serialControl(void) {
     Serial.print("STATE ");
     Serial.println(state);
 
-
     Serial.print("SETPOINT ");
     Serial.println(setPoint);
+
+    Serial.print("lvCurrent ");
+    Serial.println(atverterE.getIL());
+    
+    Serial.print("hvCurrent ");
+    Serial.println(atverterE.getIH());
 
     //Serial.println(AVERAGED);
 
