@@ -73,6 +73,10 @@ void controlUpdate(void) {
   if (state == "buck") {
     buckControl(setPoint);
   }
+  if(state == "current")
+  {
+    break;
+  }
 }
 
 
@@ -301,6 +305,12 @@ void serialControl(void) {
     Serial.print(messageSTR);
     Serial.println("mV");
 
+  else if(messageSTR.substring(0,7) == "current")
+  {
+    state = "current";
+    Serial.println(messageSTR);
+
+  }
   } else {
     Serial.flush();
   }

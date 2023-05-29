@@ -581,7 +581,7 @@
             },
             {
                 "label": "Current Limiter",
-                "value": "toCurrent",
+                "value": "current\\n",
                 "type": "str"
             }
         ],
@@ -1500,7 +1500,7 @@
             },
             {
                 "label": "Current Limiter",
-                "value": "toCurrent",
+                "value": "current\\n",
                 "type": "str"
             }
         ],
@@ -2119,7 +2119,7 @@
             },
             {
                 "label": "Current Limiter",
-                "value": "toCurrent",
+                "value": "current\\n",
                 "type": "str"
             }
         ],
