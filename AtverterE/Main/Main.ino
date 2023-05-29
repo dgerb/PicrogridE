@@ -11,7 +11,7 @@
 
 #define INPUT_VOLTAGE_JUMP 999
 #define OUTPUT_BOOST_VOLTAGE_STEADY_STATE 499
-#define OUTPUT_VOLTAGE_STEADY_STATE 99
+#define OUTPUT_BUCK_VOLTAGE_STEADY_STATE 499
 #define WINDOW_SIZE 50
 
 
@@ -24,6 +24,9 @@ double lowVoltage;
 double highVoltage;
 double actualLowVoltage;
 double actualHighVoltage;
+
+double milliSeconds = millis();
+double prevMilliSeconds = 0.0;
 
 
 int INDEX = 0;
@@ -73,24 +76,22 @@ void controlUpdate(void) {
   if (state == "buck") {
     buckControl(setPoint);
   }
-  if(state == "current")
-  {
-    break;
+  if (state == "current") {
+    //
   }
 }
 
 
 void buckControl(double lowVoltage) {
 
-  if(lowVoltage < 1000)
-  {
+  if (lowVoltage < 1000) {
     lowVoltage = 1000;
   }
 
   // Control gain variables
   //Atverter 1
-  const double kp = 0.25;  // Proportional Control: kp * error
-  const double ki = 0.02;  // Integral Control: summation of (ki * error * sample_time)
+  const double kp = 0.2;  // Proportional Control: kp * error
+  const double ki = 0.01;  // Integral Control: summation of (ki * error * sample_time)
   const double kd = 0.0;   // Derivative Control:
 
   //Atverter 2
@@ -111,16 +112,19 @@ void buckControl(double lowVoltage) {
 
   double voltageError = actualLowVoltage - lowVoltage;  // Instantaneous error of the desired output versus actual output voltage
 
-  // Allows for us to convert from voltage error to dutycycle error
-  double proportionalControl = -(kp * (voltageError / lowVoltage));  // Proportional control: -kp * percent error
+  if (abs(voltageError) > OUTPUT_BUCK_VOLTAGE_STEADY_STATE) {
+    // Allows for us to convert from voltage error to dutycycle error
+    double proportionalControl = -(kp * (voltageError / lowVoltage));  // Proportional control: -kp * percent error
 
-  integralControl += -(ki * (voltageError / (lowVoltage)));  // Integral control: -ki * (dutycycle) * percent error * sample_time
+    integralControl += -(ki * (voltageError / lowVoltage));  // Integral control: -ki * (dutycycle) * percent error * sample_time
 
-  dutyCycle *= 1 + (proportionalControl + integralControl /* + derivativeControl*/);
+    dutyCycle *= 1 + (proportionalControl + integralControl /* + derivativeControl*/);
+  }
   dutyCycle = constrain(dutyCycle, 10, 1014);
-  
-  atverterE.setDutyCycle((int) dutyCycle);
-  
+
+  atverterE.setDutyCycle((int)dutyCycle);
+  prevMilliSeconds = milliSeconds;
+
 
   /*
   //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104;  // Atverter2
@@ -160,13 +164,12 @@ void buckControl(double lowVoltage) {
 
 void boostControl(double highVoltage) {
   // Depending on which Atverter you are using
-  //actualHighVoltage = ((double)atverterE.getActualVH() * 1.02) - 92; // Atverter1
+  actualHighVoltage = ((double)atverterE.getActualVH() * 1.02) - 92; // Atverter1
   //actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36; // Atverter1
   //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104; // Atverter2
-  actualHighVoltage = ((double)atverterE.getActualVH() * 0.92) + 20;  // Atverter2
+  //actualHighVoltage = ((double)atverterE.getActualVH() * 0.92) + 20;  // Atverter2
 
-  if(highVoltage < 1000)
-  {
+  if (highVoltage < 1000) {
     highVoltage = 1000;
   }
 
@@ -197,7 +200,7 @@ void boostControl(double highVoltage) {
   //double derivativeControl = -(kd * ((double)(voltageError - prevVoltageError) / (double)INTERRUPT_TIME));  // Derivative control: -kd * (error - prev_error) / sample_time
   //prevVoltageError = voltageError;
 
-  dutyCycle *=  1 + (proportionalControl + integralControl);
+  dutyCycle *= 1 + (proportionalControl + integralControl);
   //dutyCycle = constrain(dutyCycle, 10, 1014);
   atverterE.setDutyCycle(constrain(dutyCycle, 10, 1014));
 
@@ -282,7 +285,7 @@ void serialControl(void) {
 
     Serial.print("lvCurrent ");
     Serial.println(atverterE.getIL());
-    
+
     Serial.print("hvCurrent ");
     Serial.println(atverterE.getIH());
 
@@ -295,22 +298,20 @@ void serialControl(void) {
     state = "boost";
     Serial.println(messageSTR);
     //setPoint = 20000;
-
   } else if (messageSTR.substring(0, 7) == "tooBuck") {
     state = "buck";
     Serial.println(messageSTR);
     //setPoint = 20000; //Default value
+
   } else if (isAllDigits(messageSTR)) {
     setPoint = messageSTR.toDouble();
     Serial.print(messageSTR);
     Serial.println("mV");
+  }
 
-  else if(messageSTR.substring(0,7) == "current")
-  {
+  else if (messageSTR.substring(0, 7) == "current") {
     state = "current";
     Serial.println(messageSTR);
-
-  }
   } else {
     Serial.flush();
   }
