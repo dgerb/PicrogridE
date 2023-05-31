@@ -19,7 +19,7 @@ int ledState = HIGH;
 
 // Control gain variables
 const double kp = 0.1;   // Proportional Control: kp * error
-const double ki = 0.001;  // Integral Control: summation of (ki * error * sample_time)
+const double ki = 0.0;  // Integral Control: summation of (ki * error * sample_time)
 const double kd = 0.0;    // Derivative Control:
 
 double integralControl = 0.0;
@@ -34,7 +34,7 @@ int32_t actualLowCurrent;   //Actual Output Current
 
 
 void setup(void) {
-  lowCurrent = 2000;
+  lowCurrent = 500;
   //highVoltage = atverterE.getActualVH();          //Input voltage that is recovered from the
   //dutyCycle = (lowVoltage * 1024 / highVoltage);  // * 1024; //buck duty cycle equation
 
@@ -54,7 +54,7 @@ void loop(void) {
 void controlUpdate(void) {
   //highVoltage = atverterE.getActualVH();
   //actualLowVoltage = atverterE.getActualVL();
-  actualLowCurrent = ((double)(-atverterE.getIL()) * 1.05) + 29;  //Atverter1 // Negative since hall effect sensor put in backwards
+  actualLowCurrent = ((double)(-atverterE.getIL()) * 0.95) + 30;  //Atverter1 // Negative since hall effect sensor put in backwards
   //actualLowCurrent = ((double)(-atverterE.getIL()) * 0.93) + 10;  //Atverter2
   // Static variables used in the
 
@@ -66,9 +66,6 @@ void controlUpdate(void) {
   // Allows for us to convert from voltage error to dutycycle error
   // Negative sign used since boost converter is inversely proportional to dutycycle
   double proportionalControl = -(kp * ((double)currentError / (double)lowCurrent));  // Proportional control: -kp * percent error
-  Serial.print("Proportional Control: ");
-  Serial.print(proportionalControl);
-  Serial.print("\n\n");
 
   integralControl += -(ki * ((double)currentError / (double)lowCurrent));  // Integral control: -ki * (dutycycle) * percent error * sample_time
   // Serial.print("Integral Control: ");
