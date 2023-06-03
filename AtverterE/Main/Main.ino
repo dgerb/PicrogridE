@@ -117,45 +117,16 @@ void buckControl(double lowVoltage) {
 
     dutyCycle *= 1 + (proportionalControl + integralControl /* + derivativeControl*/);
   }
+
   dutyCycle = constrain(dutyCycle, 10, 1014);
-  atverterE.setDutyCycle((int)dutyCycle);
-
-
-  /*
-  //actualLowVoltage = ((double)atverterE.getActualVL() * 0.92) + 104;  // Atverter2
-  actualLowVoltage = ((double)atverterE.getActualVL() * 1.03) + 36;  // Atverter1
-
-  if ((abs((int32_t)AVERAGED - (int32_t)lowVoltage) > OUTPUT_BOOST_VOLTAGE_STEADY_STATE)) {
-    if ((actualLowVoltage < lowVoltage)) {
-
-      if (dutyCycle == 1024) {
-        dutyCycle -= 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
-      } else {
-        dutyCycle += 1;
-      }
-    }
-
-    else if ((actualLowVoltage > lowVoltage)) {
-      if (dutyCycle == 0) {
-        dutyCycle += 1;  // If the output voltage is close to desired output then slowly move towards the more desired value
-      } else {
-        dutyCycle -= 1;
-      }
-    }
+    if ((dutyCycle == 10) || (dutyCycle == 1014)) {
+    dutyCycle = 512;
+    atverterE.setDutyCycle(dutyCycle);
+  } else {
+    atverterE.setDutyCycle(dutyCycle);
   }
-
-  // Use the moving average filter
-  SUM = SUM - READINGS[INDEX];        // Remove the oldest entry from the sum
-  VALUE = actualLowVoltage;           // Collect the actual low voltage value
-  READINGS[INDEX] = VALUE;            // Add the newest reading to the window
-  SUM = SUM + VALUE;                  // Add the newest reading to the sum
-  INDEX = (INDEX + 1) % WINDOW_SIZE;  // Increment the index, and wrap to 0 if it exceeds the window size
-  AVERAGED = SUM / WINDOW_SIZE;       // Divide the sum of the window by the window size for the result
-
-  atverterE.setDutyCycle(dutyCycle);
-  ledState = !ledState;
-  */
 }
+
 
 void boostControl(double highVoltage) {
   // Depending on which Atverter you are using
@@ -197,8 +168,16 @@ void boostControl(double highVoltage) {
     //prevVoltageError = voltageError;
     dutyCycle *= 1 + (proportionalControl + integralControl);
   }
-  //dutyCycle = constrain(dutyCycle, 10, 1014);
-  atverterE.setDutyCycle(constrain(dutyCycle, 10, 1014));
+  dutyCycle = constrain(dutyCycle, 10, 1014);
+
+  atverterE.setDutyCycle(dutyCycle);
+
+  // if ((dutyCycle == 10) || (dutyCycle == 1014)) {
+  //   dutyCycle = 512;
+  //   atverterE.setDutyCycle(dutyCycle);
+  // } else {
+  //   atverterE.setDutyCycle(dutyCycle);
+  // }
 
 
   /*
@@ -239,13 +218,13 @@ void currentControl(double lowCurrent) {
   //actualLowVoltage = atverterE.getActualVL();
   //double actualLowCurrent = ((double)(-atverterE.getIL()) * 1.05) + 29;  //Atverter1 // Negative since hall effect sensor put in backwards
   //actualLowCurrent = ((double)(-atverterE.getIL()) * 0.93) + 10;  //Atverter2
-  double actualLowCurrent = ((double)(-atverterE.getIL()) * 0.95) + 30; // Atverter3
+  double actualLowCurrent = ((double)(-atverterE.getIL()) * 0.95) + 30;  // Atverter3
 
 
   // Static variables used in the
-  const double kp = 0.1;  // Proportional Control: kp * error
+  const double kp = 0.1;    // Proportional Control: kp * error
   const double ki = 0.001;  // Integral Control: summation of (ki * error * sample_time)
-  const double kd = 0.0;  // Derivative Control:
+  const double kd = 0.0;    // Derivative Control:
 
 
   // Static variables used in the
@@ -263,12 +242,17 @@ void currentControl(double lowCurrent) {
   //double derivativeControl = (kd * ((double)(voltageError - prevVoltageError) / (double)INTERRUPT_TIME));  // Derivative control: -kd * (error - prev_error) / sample_time
   //derivativeControl = constrain(derivativeControl, -0.5, 0.5);
 
-  dutyCycle += (double)dutyCycle * (proportionalControl + integralControl /* + derivativeControl*/);
+  dutyCycle *= 1 + (proportionalControl + integralControl /* + derivativeControl*/);
 
 
   dutyCycle = constrain(dutyCycle, 10, 1014);
 
-  atverterE.setDutyCycle(dutyCycle);
+  if ((dutyCycle == 10) || (dutyCycle == 1014)) {
+    dutyCycle = 512;
+    atverterE.setDutyCycle(dutyCycle);
+  } else {
+    atverterE.setDutyCycle(dutyCycle);
+  }
 }
 
 
