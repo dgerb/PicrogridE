@@ -3,7 +3,7 @@
 """
 Created on Thu Jun 22 15:23:29 2023
 
-@author: brandon_ng
+@author: Brandon Ng
 """
 #given DC power, we'll have a DC load (purely resistive)
 #max current output 5A (using 4 for safety buffer)
