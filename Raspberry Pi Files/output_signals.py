@@ -1,19 +1,24 @@
 from time import sleep
+import json
 
 #gpio setup
 import RPi.GPIO as gpio
 gpio.setmode(gpio.BOARD)
-gpiopin = 11
+gpiopin = 31
 gpio.setup(gpiopin, gpio.OUT)
 
 
 #actual program
 minprice = 0
-maxprice = 25
+maxprice = 1
 minbinary = 0
 maxbinary = 63
 
-dailydata = [1, 2]
+
+#import JSON file already on Pi
+with open ("powerdata.json") as file:
+	data = json.load(file)
+dailydata = data.get("intervals"[0].get("payloads")[0].get("values")
 
 def map_to_value(input_value, input_min, input_max, output_min, output_max):
 	val1 = ((input_value - input_min)/(input_max - input_min))
