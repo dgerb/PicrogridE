@@ -11,19 +11,23 @@ Created on Thu Jun 22 15:23:29 2023
 #sim file approximating the function of the system, up to battery push
 
 from time import sleep
+import json
 
 #batterystart = input("What voltage should the battery be set to? 0-36V:  ")
 #loadattach = input ("Pick a resistance of our load:  ")
 
 #constants, will vary with the actual data inputted, these are all tests
 minprice = 0
-maxprice = 25
-#mincurrent = -4
-#maxcurrent = 4
+maxprice = 1
+mincurrent = -4
+maxcurrent = 4
 minbinary = 0
 maxbinary = 63
 
-dailydata = [1,2,3,4,5,6]
+#mimicking a get from the OpenADR value interface, so the data is read into the Pi
+with open ("powerdata.json") as file:
+    data = json.load(file)
+dailydata = data.get("intervals")[0].get("payloads")[0].get("values")
 
 
 #mapping one value to another, based off arduino map() function
@@ -53,7 +57,7 @@ def map_to_binary (input_val):
 def convert_to_push(pricelist):
     binary_code_list = []
     for price in pricelist:
-        #newcurrent = map_to_current(price)
+        #newcurrent = map_to_current(price)        
         #pushcode = (list(map_to_binary(newcurrent)))
         pushcode = (list(map_to_binary(price)))
         binary_code_list.append(pushcode)        
