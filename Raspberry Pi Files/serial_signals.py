@@ -44,7 +44,6 @@ def convert_to_push(pricelist):
 def rpi_output(list_of_lists):
     try:
         for price in list_of_lists:
-            
             sleep(0.1)
             ser.write((price + '\n').encode('utf-8'))
             sleep(5)
