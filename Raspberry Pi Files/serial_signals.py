@@ -49,8 +49,8 @@ def rpi_output(list_of_lists):
             ser.write((price + '\n').encode('utf-8'))
             sleep(5)
 			if ser.in_waiting > 0:
-                line = ser.readline().decode('utf-8')
-                print(line)
+				line = ser.readline().decode('utf-8')
+				print(line)
     except KeyboardInterrupt:
         ser.close()
 
