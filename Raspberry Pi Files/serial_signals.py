@@ -28,8 +28,7 @@ def map_to_value(input_value, input_min, input_max, output_min, output_max):
 
 def map_to_binary(input_val):
 	binary = map_to_value(input_val, minprice, maxprice, minbinary, maxbinary)
-	binary_string = (bin(round(binary)))[2:]
-	return binary_string.zfill(6)
+	return round(binary)
 
 def convert_to_push(pricelist):
 	binary_code_list = []
@@ -45,6 +44,9 @@ def rpi_output(list_of_lists):
             sleep(0.1)
             ser.write((price + '\n').encode('utf-8'))
             sleep(5)
+			if ser.in_waiting > 0:
+                line = ser.readline().decode('utf-8')
+                print(line)
     except KeyboardInterrupt:
         ser.close()
 
