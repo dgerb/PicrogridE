@@ -3,7 +3,7 @@
 """
 Created on Thu Jun 22 15:23:29 2023
 
-@author: Brandon Ng
+@author: brandon_ng
 """
 #given DC power, we'll have a DC load (purely resistive)
 #max current output 5A (using 4 for safety buffer)
@@ -50,8 +50,7 @@ def map_to_value (input_value, input_min, input_max, output_min, output_max):
 def map_to_binary (input_val):
     #binary = map_to_value(input_val, mincurrent, maxcurrent, minbinary, maxbinary)
     binary = map_to_value(input_val, minprice, maxprice, minbinary, maxbinary)
-    binary_string = (bin(round(binary)))[2:]  
-    return binary_string.zfill(6)
+    return round(binary)
 
 #separate the binary into lists of one character strings
 def convert_to_push(pricelist):
@@ -59,17 +58,15 @@ def convert_to_push(pricelist):
     for price in pricelist:
         #newcurrent = map_to_current(price)        
         #pushcode = (list(map_to_binary(newcurrent)))
-        pushcode = (list(map_to_binary(price)))
+        pushcode = (map_to_binary(price))
         binary_code_list.append(pushcode)        
     return binary_code_list    
 
 #use delays to mimic the RPi sending out voltage bits, now as integers
 def rpi_output(list_of_lists):
     for price in list_of_lists:
-        for bit in price:
-            print(int(bit))
-            sleep(1)
-        sleep(5)    
+        print(price)
+        sleep(1)    
 
 #print(convert_to_push(dailydata))
 data = convert_to_push(dailydata)
