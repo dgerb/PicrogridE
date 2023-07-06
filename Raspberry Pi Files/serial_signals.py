@@ -5,6 +5,8 @@ import serial
 
 
 #serial setup
+#check that you have the right serial port with ls /dev/tty* in the Pi's terminal
+#unplug your port and see which one disappears
 ser = serial.Serial('/dev/ttyACM0', 115200, timeout = 1.0)
 sleep(3)
 ser.reset_input_buffer()
@@ -17,10 +19,12 @@ maxbinary = 63
 
 
 #import JSON file already on Pi
+# make sure the file is on the Pi with the right name
 with open ("powerdata.json") as file:
 	data = json.load(file)
 dailydata = data.get("intervals")[0].get("payloads")[0].get("values")
 
+#like the arduino map() function, convert value to a new range
 def map_to_value(input_value, input_min, input_max, output_min, output_max):
 	val1 = ((input_value - input_min)/(input_max - input_min))
 	output_value = (val1 * (output_max - output_min)) + output_min
