@@ -17,12 +17,19 @@ If using ethernet and disconnected from WiFi, your machine auto-generates an IP 
 
 ## Setting Up the Raspberry Pi
 Enable serial communication in your Raspberry Pi. This can be done inside the terminal:
+
     - sudo raspi-config
+    
     - You will be redirected to a menu. Navigate to Interface Options (3) and hit enter.
+    
     - Navigate to Serial Port (I6) and hit enter.
+    
     - Select No for "Would you like a login shell to be accessible over serial?"
+    
     - Select Yes for "Would you like the serial port hardware to be enabled?"
+
     - You may have to reboot the system in order for the changes to take effect. Open a terminal and type sudo reboot.
+    
     
 Inside of the terminal, install the serial and requests libraries with: 
     - pip install requests
