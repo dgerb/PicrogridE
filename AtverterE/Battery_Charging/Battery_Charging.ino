@@ -14,7 +14,7 @@ int32_t actualLowCurrent;   //Actual Output Current
 
 void setup() {
   // put your setup code here, to run once:
-lowCurrent = 500; //positive is into battery, negative is out
+lowCurrent = -500; //positive is into battery, negative is out
 
 atverter.setupPinMode();
 atverter.initializePWMTimer();
@@ -76,8 +76,9 @@ void controlUpdate(void) {
   else{
     dutyCycle = dutyCycle;
   }
-  dutyCycle = constrain(dutyCycle, 630, 900); //general limitation to prevent 5A maximum
-  //630 yielded 2.5 from the jump, 900 about -1.2
+  dutyCycle = constrain(dutyCycle, 605, 910); //general limitation to prevent 5A maximum
+  //615 yielded 3.5 from the jump, 910 about -1.5
+  
   //all for testing, feel free to comment out
   int vh = atverter.getActualVH();
   int vl = atverter.getActualVL();
@@ -91,4 +92,3 @@ void controlUpdate(void) {
   //end of code used for testing
   atverter.setDutyCycle(dutyCycle);  
 }
-
